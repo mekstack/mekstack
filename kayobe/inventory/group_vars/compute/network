@@ -1,0 +1,6 @@
+---
+ipmi_interface:     enp1s0f0
+# intel_left_port_number -- номер интерфейсов центальных дырок на интелах (13/14/6)
+external_interface: enp{{ intel_center_port_number }}s0f0
+admin_interface:    enp{{ intel_center_port_number }}s0f0.{{ admin_vlan }}
+tunnel_interface:   enp{{ intel_center_port_number }}s0f1.{{ tunnel_vlan }}
