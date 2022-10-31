@@ -1,0 +1,90 @@
+---
+- name: Configure drone
+  hosts: master
+  vars_prompt:
+    - name: drone_token
+      private: no
+      prompt: 'Enter your drone token here (Go to http://drone.corp and click on your profile pic)'
+
+  environment:
+    DRONE_SERVER: http://drone.corp
+    DRONE_TOKEN: '{{ drone_token }}'
+
+  vars:
+    repos:
+      - mekstack/docs
+      - mekstack/arch-boxes
+      - mekstack/util
+      - mekstack/test
+      - mekstack/ubuntu-custom
+    secrets:
+      - { repo: 'mekstack/docs', name: 'docs_key', secret: '{{ docs_key }}' }
+      - { repo: 'mekstack/docs', name: 'gitlab_deploy_key', secret: '{{ docs_gitlab_deploy_key }}' }
+      - { repo: 'mekstack/arch-boxes', name: 'mekstack_clouds', secret: '{{ mekstack_clouds }}' }
+      - { repo: 'mekstack/arch-boxes', name: 'gitlab_deploy_key', secret: '{{ arch_boxes_gitlab_deploy_key }}' }
+      - { repo: 'mekstack/arch-boxes', name: 'accounts_yaml', secret: '{{ accounts_yaml }}' }
+      - { repo: 'mekstack/arch-boxes', name: 'drone_token', secret: '{{ drone_token }}' }
+      - { repo: 'mekstack/arch-boxes', name: 'zulip_token', secret: '{{ zulip_token }}' }
+      - { repo: 'mekstack/test', name: 'mekstack_clouds', secret: '{{ mekstack_clouds }}' }
+      - { repo: 'mekstack/test', name: 'accounts_yaml', secret: '{{ accounts_yaml }}' }
+      - { repo: 'mekstack/test', name: 'zulip_token', secret: '{{ zulip_token }}' }
+      - { repo: 'mekstack/util', name: 'clouds', secret: '{{ reaper_clouds }}' }
+      - { repo: 'mekstack/ubuntu-custom', name: 'mekstack_clouds', secret: '{{ mekstack_clouds }}' }
+      - { repo: 'mekstack/ubuntu-custom', name: 'drone_token', secret: '{{ drone_token }}' }
+    crons:
+      - { repo: 'mekstack/util', name: 'Remove orphaned resources', period: '@daily' }
+    admins:
+      - TheHussky
+      - kud-aa
+      - mmskv
+
+  tasks:
+    - name: Include drone secrets
+      include_vars: drone-secrets.yml
+
+    - name: Update repositories
+      become: true
+      pacman:
+        update_cache: true
+
+    - name: Install drone-cli package
+      become: true
+      pacman:
+        name: drone-cli
+
+    - name: Enable repos
+      shell: drone repo enable "{{ item }}"
+      with_items:
+        - '{{ repos }}'
+
+    - name: Trust repos
+      shell: drone repo update --trusted=true "{{ item }}"
+      with_items:
+        - '{{ repos }}'
+
+    - name: Delete secrets
+      shell: drone secret rm --repository "{{ item.repo }}" --name "{{ item.name }}"
+      failed_when: false
+      with_items:
+        - '{{ secrets }}'
+
+    - name: Add secrets
+      shell: drone secret add --repository "{{ item.repo }}" --name "{{ item.name }}" --data "{{ item.secret }}"
+      with_items:
+        - '{{ secrets }}'
+
+    - name: Add cron jobs
+      failed_when: false
+      shell: |
+        drone cron rm "{{ item.repo }}" "{{ item.name }}"
+        drone cron add "{{ item.repo }}" "{{ item.name }}" "{{ item.period }}"
+      with_items:
+        - '{{ crons }}'
+
+    - name: Add admins
+      failed_when: false
+      shell: |
+        drone user add --admin "{{ item }}"
+        drone user update --admin "{{ item }}"
+      with_items:
+        - '{{ admins }}'

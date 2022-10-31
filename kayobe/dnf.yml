@@ -1,0 +1,62 @@
+---
+# DNF configuration.
+
+###############################################################################
+# DNF repository configuration.
+
+# Yum configuration. Dict mapping Yum config option names to their values.
+# dnf_config:
+#   proxy: http://proxy.example.com
+#dnf_config:
+
+# Whether or not to use a local Yum mirror. Default value is 'false'.
+#dnf_use_local_mirror:
+
+# Mirror FQDN for Yum CentOS repos. Default value is 'mirror.centos.org'.
+#dnf_centos_mirror_host:
+
+# Mirror directory for Yum CentOS repos. Default value is 'centos'.
+#dnf_centos_mirror_directory:
+
+# Mirror FQDN for Yum Rocky repos. Default value is 'dl.rockylinux.org'.
+#dnf_rocky_mirror_host:
+
+# Mirror directory for Yum Rocky repos. Default value is 'pub/rocky'.
+#dnf_rocky_mirror_directory:
+
+# Mirror FQDN for Yum EPEL repos. Default value is
+# 'download.fedoraproject.org'.
+#dnf_epel_mirror_host:
+
+# Mirror directory for Yum EPEL repos. Default value is 'pub/epel'.
+#dnf_epel_mirror_directory:
+
+# A dict of custom repositories.
+# You can see params on
+# http://docs.ansible.com/ansible/latest/modules/yum_repository_module.html.
+# For example:
+# dnf_custom_repos:
+#   reponame:
+#     baseurl: http://repo
+#     file: myrepo
+#     gpgkey: http://gpgkey
+#     gpgcheck: yes
+#dnf_custom_repos:
+
+# Whether to install the epel-release package. This affects RedHat-based
+# systems only. Default value is 'false'.
+#dnf_install_epel:
+
+###############################################################################
+# DNF Automatic configuration.
+
+# Whether DNF Automatic is enabled. This can be used to regularly apply
+# security updates. Default value is 'false'.
+dnf_automatic_enabled: true
+
+# DNF Automatic upgrade type. Default value is 'security'.
+#dnf_automatic_upgrade_type:
+
+###############################################################################
+# Dummy variable to allow Ansible to accept this file.
+workaround_ansible_issue_8743: yes

@@ -1,0 +1,66 @@
+---
+keystone_identity_providers:
+  - name: "google"
+    openstack_domain: "miem"
+    protocol: "openid"
+    is_default: "true"
+    authorized_domain: "miem.hse.ru"
+    identifier: "https://accounts.google.com"
+    public_name: "Google"
+    attribute_mapping: "miem-mapping"
+    metadata_folder: "{{ kayobe_config_path }}/kolla/federation/idp"
+    certificate_file: "{{ kayobe_config_path }}/kolla/federation/03e84aed4ef4431014e8617567864c4efaaaede9.pem"
+
+keystone_identity_mappings:
+  - name: "miem-mapping"
+    file: "{{ kayobe_config_path }}/kolla/federation/rules.json"
+
+#octavia_certs_country: RU
+#octavia_certs_state: Moscow
+#octavia_certs_organization: mekstack
+#octavia_certs_organizational_unit: Octavia
+#
+#octavia_amp_flavor:
+#  name: "amphora"
+#  is_public: no
+#  vcpus: 4
+#  ram: 1024
+#  disk: 5
+#
+#octavia_amp_network:
+#  name: provider
+#  provider_network_type: flat
+#  provider_physical_network: physnet1
+#  external: true
+#  shared: true
+#  subnet:
+#    name: miem_server_subnet
+#    cidr: "172.18.130.0/24"
+#    allocation_pool_start: "172.18.130.110"
+#    allocation_pool_end: "172.18.130.150"
+#    gateway_ip: "172.18.130.1"
+#    enable_dhcp: yes
+
+neutron_ovn_distributed_fip: "yes"
+openstack_region_name: "MIEM"
+
+  #enable_prometheus: "yes"
+
+enable_heat: "no"
+enable_designate: "yes"
+enable_mariabackup: "yes"
+enable_octavia: "no"
+
+enable_designate: "yes"
+enable_redis: "yes"
+designate_backend: "bind9"
+designate_ns_record: "mekstack.ru"
+designate_enable_notifications_sink: "no"
+designate_forwarders_addresses: "8.8.8.8; 8.8.4.4"
+designate_recursion: "yes"
+neutron_dnsmasq_dns_servers: "172.18.221.200"
+
+rabbitmq_cluster_partition_handling: "autoheal"
+haproxy_queue_timeout: "3m"
+haproxy_client_timeout: "3m"
+haproxy_server_timeout: "3m"

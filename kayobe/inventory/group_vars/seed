@@ -1,0 +1,2 @@
+ipmi_interface: ens3
+ipmi_gateway: 172.18.222.1
