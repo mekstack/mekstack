@@ -22,9 +22,9 @@ resource "openstack_networking_router_interface_v2" "router_interface" {
 }
 
 resource "openstack_networking_floatingip_v2" "web-1" {
-  pool = "provider"
+  pool = "miem"
 }
 
 resource "openstack_networking_floatingip_v2" "web-2" {
-  pool = "provider"
+  pool = "miem"
 }

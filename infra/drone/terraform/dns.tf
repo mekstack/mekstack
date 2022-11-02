@@ -12,7 +12,7 @@ resource "openstack_dns_recordset_v2" "drone_internal" {
   description = "Drone web frontend"
   ttl         = 3000
   type        = "A"
-  records     = [openstack_networking_floatingip_v2.master-fip.address]
+  records     = [openstack_compute_instance_v2.master.access_ip_v4]
 }
 
 resource "openstack_dns_recordset_v2" "drone_master" {
@@ -24,11 +24,13 @@ resource "openstack_dns_recordset_v2" "drone_master" {
   records     = [openstack_compute_instance_v2.master.access_ip_v4]
 }
 
-resource "openstack_dns_recordset_v2" "drone_exec1_floating" {
+resource "openstack_dns_recordset_v2" "drone_slave" {
   zone_id     = openstack_dns_zone_v2.drone_zone.id
   name        = "exec1.drone.miem."
   description = "Drone slave"
   ttl         = 3000
   type        = "A"
-  records     = [openstack_networking_floatingip_v2.exec1-fip.address]
+  records     = [openstack_compute_instance_v2.exec1.access_ip_v4]
 }
+
+

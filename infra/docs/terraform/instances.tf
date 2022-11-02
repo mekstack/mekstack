@@ -2,7 +2,7 @@ resource "openstack_compute_instance_v2" "web-1" {
   name        = "web-1"
   image_name  = "Arch Linux"
   flavor_name = "m2s.micro"
-  user_data   = format("%s  %s", file("${path.module}/../../authorized_keys.yaml"), file("${path.module}/../deploy_key.yaml"))
+  key_pair    =  openstack_compute_keypair_v2.admin-deploy.public_key
   network {
     uuid = openstack_networking_network_v2.network.id
   }
@@ -18,7 +18,7 @@ resource "openstack_compute_instance_v2" "web-2" {
   name        = "web-2"
   image_name  = "Arch Linux"
   flavor_name = "m2s.micro"
-  user_data   = format("%s  %s", file("${path.module}/../../authorized_keys.yaml"), file("${path.module}/../deploy_key.yaml"))
+  key_pair    =  openstack_compute_keypair_v2.admin-deploy.public_key
   network {
     uuid = openstack_networking_network_v2.network.id
   }
