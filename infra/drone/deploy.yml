@@ -39,7 +39,7 @@
           - /etc/timezone:/etc/timezone
         env:
           DRONE_RPC_SECRET: '{{ shared_secret }}'
-          DRONE_RPC_HOST: 'master.drone.corp'
+          DRONE_RPC_HOST: 'master.drone.miem'
           DRONE_RPC_PROTO: 'http'
           DRONE_RUNNER_CAPACITY: '4'
           DRONE_RUNNER_NAME: 'runner1'
@@ -101,7 +101,7 @@
         content: |
           DRONE_RPC_PROTO=http
           TMPDIR=/opt/drone-runner-exec
-          DRONE_RPC_HOST=master.drone.corp
+          DRONE_RPC_HOST=master.drone.miem
           DRONE_RPC_SECRET={{ shared_secret }}
           DRONE_LOG_FILE=/var/log/drone-runner-exec/exec.log
 

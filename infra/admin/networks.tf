@@ -18,6 +18,7 @@ resource "openstack_networking_subnet_v2" "miem" {
   cidr        = "172.18.220.0/24"
   gateway_ip  = "172.18.220.1"
   enable_dhcp = true
+  dns_nameservers = ["172.18.221.21"]  
 
   allocation_pool {
     start = "172.18.220.51"

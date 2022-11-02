@@ -57,7 +57,7 @@ designate_backend: "bind9"
 designate_ns_record: "mekstack.ru"
 designate_enable_notifications_sink: "no"
 designate_forwarders_addresses: "8.8.8.8; 8.8.4.4"
-designate_recursion: "yes"
+designate_recursion: "yes; allow-recursion { any; }"
 neutron_dnsmasq_dns_servers: "172.18.221.200"
 
 rabbitmq_cluster_partition_handling: "autoheal"
