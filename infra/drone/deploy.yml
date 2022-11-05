@@ -5,8 +5,33 @@
   tags: [master]
   tasks:
     - name: Include drone secrets
-      include_vars: drone-secrets.yml
+      include: secrets/include_deploy_secrets.yml
 
+    - name: Ensure pip and setuptools for ansible modules
+      pacman:
+        name: "{{ item }}"
+        state: present
+        update_cache: true
+      with_items:
+        - python-pip
+        - python-setuptools
+
+    - name: Install docker
+      pacman:
+        name: docker
+        state: present
+
+    - name: Enable docker 
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+        masked: no
+
+    - name: Pip - install docker module
+      pip:
+        name: docker
+ 
     - name: Start drone server
       docker_container:
         name: drone
@@ -26,7 +51,7 @@
           DRONE_SERVER_HOST: 'lb.cloud.miem.hse.ru'
           DRONE_SERVER_PROTO: 'https'
           DRONE_USER_FILTER: 'mmskv,TheHussky'
-          DRONE_USER_CREATE: 'username:mmskv,admin:true'
+          DRONE_USER_CREATE: 'username:TheHussky,admin:true'
 
     - name: Start drone runner
       docker_container:
@@ -57,7 +82,7 @@
   tags: [exec]
   tasks:
     - name: Include drone secrets
-      include_vars: drone-secrets.yml
+      include: secrets/include_deploy_secrets.yml
 
     - name: Update repositories
       community.general.pacman:
