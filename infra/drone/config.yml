@@ -4,10 +4,10 @@
   vars_prompt:
     - name: drone_token
       private: no
-      prompt: 'Enter your drone token here (Go to http://drone.corp and click on your profile pic)'
+      prompt: 'Enter your drone token here (Go to http://drone.miem and click on your profile pic)'
 
   environment:
-    DRONE_SERVER: http://drone.corp
+    DRONE_SERVER: http://drone.miem
     DRONE_TOKEN: '{{ drone_token }}'
 
   vars:
@@ -28,7 +28,7 @@
       - { repo: 'mekstack/test', name: 'mekstack_clouds', secret: '{{ mekstack_clouds }}' }
       - { repo: 'mekstack/test', name: 'accounts_yaml', secret: '{{ accounts_yaml }}' }
       - { repo: 'mekstack/test', name: 'zulip_token', secret: '{{ zulip_token }}' }
-      - { repo: 'mekstack/util', name: 'clouds', secret: '{{ reaper_clouds }}' }
+      - { repo: 'mekstack/util', name: 'clouds', secret: '{{ mekstack_clouds }}' }
       - { repo: 'mekstack/ubuntu-custom', name: 'mekstack_clouds', secret: '{{ mekstack_clouds }}' }
       - { repo: 'mekstack/ubuntu-custom', name: 'drone_token', secret: '{{ drone_token }}' }
     crons:
@@ -40,7 +40,7 @@
 
   tasks:
     - name: Include drone secrets
-      include_vars: drone-secrets.yml
+      include: secrets/include_config_secrets.yml
 
     - name: Update repositories
       become: true
