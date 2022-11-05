@@ -1,3 +1,3 @@
 [docs]
-web-1 ansible_host=web-1.docs.corp ansible_user=arch
-web-2 ansible_host=web-2.docs.corp ansible_user=arch
+web-1 ansible_host=web-1.docs.miem ansible_user=root
+web-2 ansible_host=web-2.docs.miem ansible_user=root
