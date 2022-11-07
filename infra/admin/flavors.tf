@@ -49,7 +49,8 @@ resource "openstack_compute_flavor_v2" "m2s_large" {
   ram       = "2048"
   swap      = "1024"
   disk      = "20"
-  is_public = false
+  is_public = true
+
   flavor_id = "70b424dc-c77a-4d4d-8225-c45153f493d7"
 
   extra_specs = {
