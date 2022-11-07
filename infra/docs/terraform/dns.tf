@@ -6,7 +6,16 @@ resource "openstack_dns_zone_v2" "docs_zone" {
   type        = "PRIMARY"
 }
 
-resource "openstack_dns_recordset_v2" "web-1" {
+resource "openstack_dns_recordset_v2" "docs_internal" { 
+  zone_id     = openstack_dns_zone_v2.docs_zone.id
+  name        = "docs.miem."
+  description = "docs endpoint"
+  ttl         = 3000
+  type        = "A"
+  records     = [openstack_compute_instance_v2.web-1.access_ip_v4]
+}
+
+resource "openstack_dns_recordset_v2" "web-1" { 
   zone_id     = openstack_dns_zone_v2.docs_zone.id
   name        = "web-1.docs.miem."
   description = "web-1 instance"
