@@ -97,3 +97,7 @@ overcloud
 mgmt-switches
 ctl-switches
 hs-switches
+
+[monitoring:children]
+controllers
+
