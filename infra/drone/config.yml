@@ -1,4 +1,4 @@
----
+--:-
 - name: Configure drone
   hosts: master
   vars_prompt:
@@ -16,7 +16,7 @@
       - mekstack/arch-boxes
       - mekstack/util
       - mekstack/test
-      - mekstack/ubuntu-custom
+      - mekstack/images-custom
     secrets:
       - { repo: 'mekstack/docs', name: 'docs_key', secret: '{{ docs_key }}' }
       - { repo: 'mekstack/docs', name: 'gitlab_deploy_key', secret: '{{ docs_gitlab_deploy_key }}' }
@@ -29,8 +29,8 @@
       - { repo: 'mekstack/test', name: 'accounts_yaml', secret: '{{ accounts_yaml }}' }
       - { repo: 'mekstack/test', name: 'zulip_token', secret: '{{ zulip_token }}' }
       - { repo: 'mekstack/util', name: 'clouds', secret: '{{ mekstack_clouds }}' }
-      - { repo: 'mekstack/ubuntu-custom', name: 'mekstack_clouds', secret: '{{ mekstack_clouds }}' }
-      - { repo: 'mekstack/ubuntu-custom', name: 'drone_token', secret: '{{ drone_token }}' }
+      - { repo: 'mekstack/images-custom', name: 'mekstack_clouds', secret: '{{ mekstack_clouds }}' }
+      - { repo: 'mekstack/images-custom', name: 'drone_token', secret: '{{ drone_token }}' }
     crons:
       - { repo: 'mekstack/util', name: 'Remove orphaned resources', period: '@daily' }
     admins:
