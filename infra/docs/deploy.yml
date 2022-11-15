@@ -1,75 +1,71 @@
 ---
-- name: Deploy new docs
-  hosts: all
+- name: Build latest docs
+  hosts: localhost
+  vars:
+    ansible_connection: local
+    ansible_python_interpreter: "{{ ansible_playbook_python }}"
   tasks:
-    - name: Check env
-      fail:
-        msg: "Environment variable DOCS_ROOT is not defined or empty"
-      when: lookup('env', 'DOCS_ROOT') == ''
+    - name: Ensure docs source code checkout exists
+      git: 
+        repo: 'https://github.com/mekstack/docs'
+        dest: "{{ docs_checkout_path }}"
 
+    - name: Compile docs html
+      shell: 
+        cmd: tox -- html
+        chdir: "{{ docs_checkout_path }}"
+
+- name: Configure nginx
+  hosts: all
+  become: true
+  tasks:
     - name: Update repositories
-      become: yes
-      community.general.pacman:
+      apt:
         update_cache: yes
 
-    - name: Install nginx
-      become: yes
-      community.general.pacman:
-        name: nginx
-
-    - name: Install rsync
-      become: yes
-      community.general.pacman:
-        name: rsync
+    - name: Install packages
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - nginx
+        - rsync
 
     - name: Enable and start nginx
-      become: yes
       service:
         name: nginx
         enabled: yes
-        args: now
 
+- name: Deploy docs
+  hosts: all
+  become: true
+  tasks:
     - name: Copy nginx.conf
-      become: yes
       template:
         src: 'nginx.conf'
         dest: '/etc/nginx/nginx.conf'
 
     - name: Verify nginx config
-      become: yes
       shell: nginx -t
       register: out
     - debug:
         msg: '{{ out.stdout_lines }}, {{ out.stderr_lines }}'
 
     - name: Ensure /var/www/ exists
-      become: true
       file:
         path: /var/www
         state: directory
-        owner: arch
-        group: arch
+        owner: 1000
+        group: 1000
         mode: 0775
 
     - name: Copy built files
-      become: false
       synchronize:
-        src: "{{ lookup('env', 'DOCS_ROOT') }}/build/html/"
+        src: "{{ docs_checkout_path }}/build/html/"
         dest: '/var/www/html/'
         recursive: yes
-
-    - name: Change /var/www/ permissions
-      become: true
-      file:
-        path: /var/www
-        state: directory
-        owner: arch
-        group: arch
-        mode: 0775
-        recurse: true
+        rsync_opts: ['--chown', '1000:1000', '--chmod', '0775']
 
     - name: Restart nginx
-      become: yes
       service:
         name: nginx
         state: restarted
