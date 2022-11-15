@@ -1,8 +1,15 @@
 locals {
-  key_files_contents = format("%s  %s", file("${path.module}/../../authorized_keys"), file("${path.module}/../deploy_key"))
-} 
+  deploy_host_pubkey = try(
+    file("~/.ssh/id_ed25519.pub"),
+    file("~/.ssh/id_rsa.pub")
+  )
+  drone_pubkey   = file("${path.module}/../deploy_key")
+  admins_pubkeys = file("${path.module}/../../authorized_keys")
 
-resource "openstack_compute_keypair_v2" "admin-deploy" {
-  name       = "admin-deploy"
-  public_key = local.key_files_contents
+  all_pubkeys = join("\n", [local.admins_pubkeys, local.drone_pubkey, local.deploy_host_pubkey])
+}
+
+resource "openstack_compute_keypair_v2" "all" {
+  name       = "all"
+  public_key = local.all_pubkeys
 }
