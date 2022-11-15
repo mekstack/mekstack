@@ -1,5 +1,5 @@
 resource "openstack_compute_quotaset_v2" "drone_quota" {
-  project_id           = data.openstack_identity_project_v3.drone.id
+  project_id           = openstack_identity_project_v3.drone.id
   key_pairs            = 10
   ram                  = 6144
   cores                = 20
