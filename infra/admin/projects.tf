@@ -5,11 +5,10 @@ resource "openstack_identity_project_v3" "drone" {
 
 resource "openstack_identity_project_v3" "docs" {
   name        = "docs"
-  description = "Project for docs.mekstack.ru"
+  description = "Project for mekstack docs"
 }
 
-resource "openstack_identity_project_v3" "mekstack" {
-  name        = "mekstack"
-  description = "Project for mekstack images"
+resource "openstack_identity_project_v3" "images" {
+  name        = "images"
+  description = "Project for mekstack Linux image autobuilds"
 }
-
