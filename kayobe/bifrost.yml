@@ -77,8 +77,8 @@
 
 # List of extra kernel parameters for Bifrost's Ironic PXE configuration.
 # Default is empty.
-#kolla_bifrost_extra_kernel_options: 
-#  - 'sshkey=\"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDAlPHC42PxQPRhIWm2OCrDUEuyPv+faMzhgF0VNheZX0hqak/6RvuCgcc/THFaBhFKX9dKnl0wi1UBhDMVpO7HzW3Yxl+FZ5aihgyUcLxl0yhZrm47PGhARs/wBsptNlWiiNinbmgEFoNLaCesmUT+nY+k0p9WGQIm6MORdSa2FCQNyASqfmEhaVnrlRzk2FGUgpncnYOeuIOU3Nzd8ee5lVKJoAzuC9N43csdG4znPR0l4fKeewhlNYpGVa9n4mREkWskAEExRBby8Mria903OAQSuO4C0wuVT5fYQRPJuDPhOT19etXecAwDLXyyrNRSM64RpDTD+eHTRhKMnlUT5ZV/jHE4dFxZGCT7GTUFGpknexzjFR4VWCUELdR+pXszA3uANF8xwJg3ANup0dr+GtOdnn77m4ktwc+C7MPkHhpJXhrQ5EcJGQlW6m1jGtlArYU7eyPACQmyPH79x0GHNPnBZ06p4UkvAyeyHpiKeBQ3s2fqX6GBHaU1/pBovKs= rocky@kayobe\"'
+kolla_bifrost_extra_kernel_options:
+  - 'sshkey=\"{{ lookup("file", "~/.ssh/id_rsa.pub") }}\"'
 
 ###############################################################################
 # Ironic Inspector configuration.
@@ -146,16 +146,15 @@
 # Server inventory for Bifrost.
 kolla_bifrost_servers:
   ctl01:
+    uuid: 00000000-0000-0000-0000-000000000001
     name: ctl01
     driver: ipmi
     nics:
       - mac: 00:1E:67:10:CC:20
     driver_info:
-      power:
-        ipmi_username: root
-        ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:2a958102') }}"
-        ipmi_address: 172.18.222.12
-        ipmi_protocol_version: 1.5
+      ipmi_username: root
+      ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:cceaa826') }}"
+      ipmi_address: 172.18.222.12
     properties:
       capabilities: "boot_mode:bios"
       cpu_arch: "x86_64"
@@ -165,50 +164,13 @@ kolla_bifrost_servers:
       root_device:
         name: "/dev/sda"
   ctl02:
+    uuid: 00000000-0000-0000-0000-000000000002
     name: ctl02
     driver: ipmi
     driver_info:
-      power:
-        ipmi_username: root
-        ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:e2ba0f06') }}"
-        ipmi_address: 172.18.222.17
-    nics:
-      - mac: 00:1E:67:1D:29:6C
-    properties:
-      capabilities: "boot_mode:bios"
-      cpu_arch: "x86_64"
-      ram: "8192"
-      disk_size: "50"
-      cpus: "8"
-      root_device:
-        name: "/dev/sda"
-  ctl03:
-    name: ctl03
-    driver: ipmi
-    driver_info:
-      power:
-        ipmi_username: root
-        ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:e2ba0f06') }}"
-        ipmi_address: 172.18.222.16
-    nics:
-      - mac: 00:1E:67:10:CC:9C
-    properties:
-      capabilities: "boot_mode:bios"
-      cpu_arch: "x86_64"
-      ram: "8192"
-      disk_size: "50"
-      cpus: "8"
-      root_device:
-        name: "/dev/sda"
-  cmp01:
-    name: cmp01
-    driver: ipmi
-    driver_info:
-      power:
-        ipmi_username: root
-        ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:4863c272') }}"
-        ipmi_address: 172.18.222.13
-        ipmi_protocol_version: 1.5
+      ipmi_username: root
+      ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:4863c272') }}"
+      ipmi_address: 172.18.222.13
     nics:
       - mac: 00:1E:67:21:91:98
     properties:
@@ -219,16 +181,70 @@ kolla_bifrost_servers:
       cpus: "8"
       root_device:
         name: "/dev/sda"
+  ctl03:
+    uuid: 00000000-0000-0000-0000-000000000003
+    name: ctl03
+    driver: ipmi
+    driver_info:
+      ipmi_username: root
+      ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:c7b40815') }}"
+      ipmi_address: 172.18.222.14
+    nics:
+      - mac: 00:15:17:EE:8D:0C
+    properties:
+      capabilities: "boot_mode:bios"
+      cpu_arch: "x86_64"
+      ram: "8192"
+      disk_size: "50"
+      cpus: "8"
+      root_device:
+        name: "/dev/sda"
+  cmp01:
+    uuid: 00000000-0000-0000-0000-000000000004
+    name: cmp01
+    driver: ipmi
+    driver_info:
+      ipmi_username: root
+      ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:cd445ae2') }}"
+      ipmi_address: 172.18.222.15
+    nics:
+      - mac: 00:1E:67:28:A9:9C
+    properties:
+      capabilities: "boot_mode:bios"
+      cpu_arch: "x86_64"
+      ram: "8192"
+      disk_size: "50"
+      cpus: "8"
+      root_device:
+        name: "/dev/sda"
   cmp02:
+    uuid: 00000000-0000-0000-0000-000000000005
     name: cmp02
     driver: ipmi
     driver_info:
-      power:
-        ipmi_username: root
-        ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:cd445ae2') }}"
-        ipmi_address: 172.18.222.15
+      ipmi_username: root
+      ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:2a958102') }}"
+      ipmi_address: 172.18.222.16
     nics:
-      - mac: 00:1E:67:28:A9:9C
+      - mac: 00:1E:67:10:CC:9C
+    properties:
+      capabilities: "boot_mode:bios"
+      cpu_arch: "x86_64"
+      ram: "8192"
+      disk_size: "50"
+      cpus: "8"
+      root_device:
+        name: "/dev/sda"
+  cmp03:
+    uuid: 00000000-0000-0000-0000-000000000006
+    name: cmp03
+    driver: ipmi
+    driver_info:
+      ipmi_username: root
+      ipmi_password: "{{ lookup('hashi_vault', 'secret=kv/data/ipmi_passwords:e2ba0f06') }}"
+      ipmi_address: 172.18.222.17
+    nics:
+      - mac: 00:1E:67:1D:29:6C
     properties:
       capabilities: "boot_mode:bios"
       cpu_arch: "x86_64"
