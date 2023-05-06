@@ -1,2 +1,6 @@
 ---
-intel_center_port_number: 4
+intel_center_port_number: 11
+ipmi_interface:     enp1s0f1
+admin_interface:    enp1s0f1.{{ admin_vlan }}
+storage_interface:  enp1s0f1.{{ storage_vlan }}
+internal_interface: enp1s0f1.{{ internal_vlan }}

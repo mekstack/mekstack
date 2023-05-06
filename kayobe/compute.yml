@@ -13,8 +13,10 @@
 compute_network_interfaces:
   - ipmi
   - admin
+  - internal
   - external
   - tunnel
+  - storage
 
 # List of default networks to which compute nodes are attached.
 #compute_default_network_interfaces:

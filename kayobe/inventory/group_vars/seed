@@ -1,2 +1,4 @@
-ipmi_interface: ens3
-ipmi_gateway: 172.18.222.1
+ipmi_interface:     ens3
+admin_interface:    ens3.{{ admin_vlan }}
+internal_interface: ens3.{{ internal_vlan }}
+public_interface:   ens4.{{ public_vlan }}

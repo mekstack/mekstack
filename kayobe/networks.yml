@@ -1,17 +1,17 @@
 ---
 admin_oc_net_name: ipmi
 oob_oc_net_name: ipmi
-internal_net_name: admin
-public_net_name: admin
-external_net_names: 
+internal_net_name: internal
+public_net_name: public
+external_net_names:
   - external
 provision_oc_net_name: ipmi
 tunnel_net_name: tunnel
 
-kolla_internal_vip_address: 172.18.221.100
-kolla_internal_fqdn: mekstack.internal
+kolla_internal_vip_address: 10.228.8.200
+kolla_internal_fqdn: internal.mekstack.ru
 
-kolla_external_vip_address: 172.18.221.200
+kolla_external_vip_address: 172.18.217.200
 kolla_external_fqdn: mekstack.ru
 
 # ADMIN
@@ -19,6 +19,12 @@ kolla_external_fqdn: mekstack.ru
 admin_cidr: 172.18.221.0/24
 admin_vlan: 221
 admin_mtu: 1500
+
+# PUBLIC
+
+public_cidr: 172.18.217.0/24
+public_vlan: 217
+public_mtu: 1500
 
 # IPMI
 
@@ -32,4 +38,17 @@ ipmi_inspection_allocation_pool_end: 172.18.222.250
 
 tunnel_cidr: 10.228.6.0/24
 tunnel_vlan: 200
-tunnel_mtu: 9000
+tunnel_mtu: 1500 # TODO: change to 9000
+
+# INTERNAL
+
+internal_cidr: 10.228.8.0/24
+internal_vlan: 228
+internal_mtu: 1500
+
+# STORAGE
+
+storage_cidr: 10.230.10.0/24
+storage_vlan: 230
+storage_mtu: 9000
+

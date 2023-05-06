@@ -10,8 +10,11 @@
 # Seed network interface configuration.
 
 # List of networks to which seed nodes are attached.
-seed_network_interfaces: 
+seed_network_interfaces:
   - ipmi
+  - admin
+  - internal
+  - public
 
 # List of default networks to which seed nodes are attached.
 #seed_default_network_interfaces:

@@ -4,11 +4,12 @@
 
 
 [compute]
-cmp01 ipmi_address=172.18.222.13 bmc_type=
-cmp02 ipmi_address=172.18.222.15 bmc_type=
+cmp01 ipmi_address=172.18.222.15 bmc_type=
+cmp02 ipmi_address=172.18.222.16 bmc_type=
+cmp03 ipmi_address=172.18.222.17 bmc_type=
 
 [controllers]
 ctl01 ipmi_address=172.18.222.12 bmc_type=
-ctl02 ipmi_address=172.18.222.17 bmc_type=
-ctl03 ipmi_address=172.18.222.16 bmc_type=
+ctl02 ipmi_address=172.18.222.13 bmc_type=
+ctl03 ipmi_address=172.18.222.14 bmc_type=
 
