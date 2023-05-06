@@ -49,7 +49,8 @@
 #overcloud_dib_env_vars_default:
 
 # DIB additional environment variables. Default is none.
-#overcloud_dib_env_vars_extra:
+overcloud_dib_env_vars_extra:
+  DIB_MIN_TMPFS: 4
 
 # DIB environment variables. Default is combination of
 # overcloud_dib_env_vars_default and overcloud_dib_env_vars_extra.

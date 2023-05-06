@@ -44,7 +44,8 @@ ipa_build_dib_elements_extra:
 
 # Dictionary of environment variables to provide to Diskimage Builder (DIB)
 # during IPA image build.
-ipa_build_dib_env: 
+ipa_build_dib_env:
+  DIB_MIN_TMPFS: 4
   DIB_RELEASE: "bullseye"
 
 # List of default git repositories containing Diskimage Builder (DIB) elements.

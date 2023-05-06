@@ -1,4 +1,4 @@
-source ~/venvs/kayobe/bin/activate.fish
+source /opt/kayobe/venvs/kayobe/bin/activate.fish
 set -x base_path /opt/kayobe
 set -x KOLLA_SOURCE_PATH {$base_path}/src/kolla-ansible
 set -x KOLLA_VENV_PATH {$base_path}/venvs/kolla-ansible
