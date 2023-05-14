@@ -2,14 +2,14 @@ locals {
   flavors = [
     {
       name  = "micro"
-      vcpus = 2
+      vcpus = 4
       ram   = 512
       swap  = 512
       disk  = 5
     },
     {
       name  = "small"
-      vcpus = 4
+      vcpus = 6
       ram   = 1024
       swap  = 1024
       disk  = 10

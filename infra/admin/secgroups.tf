@@ -1,11 +1,6 @@
-data "openstack_identity_project_v3" "admin" {
-  name      = "admin"
-  domain_id = "default"
-}
-
 data "openstack_networking_secgroup_v2" "default" {
   name      = "default"
-  tenant_id = data.openstack_identity_project_v3.admin.id
+  tenant_id = data.openstack_identity_auth_scope_v3.current.project_id
 }
 
 resource "openstack_networking_secgroup_rule_v2" "ssh" {

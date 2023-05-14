@@ -1,6 +1,7 @@
 resource "openstack_networking_network_v2" "public" {
-  name           = "public"
-  description    = "Network with access to MIEM networks"
+  name        = "public"
+  description = "Public Network"
+
   admin_state_up = true
   external       = true
   shared         = true
@@ -8,20 +9,47 @@ resource "openstack_networking_network_v2" "public" {
   segments {
     network_type     = "vlan"
     physical_network = "physnet1"
-    segmentation_id  = "220"
+    segmentation_id  = "218"
   }
 }
 
 resource "openstack_networking_subnet_v2" "public" {
-  network_id      = openstack_networking_network_v2.public.id
-  name            = "public-subnet"
-  cidr            = "172.18.220.0/24"
-  gateway_ip      = "172.18.220.1"
-  enable_dhcp     = true
-  dns_nameservers = ["172.18.221.21", "172.18.221.22", "172.18.221.23"]
+  name        = "public-subnet"
+  description = "Public Subnet"
+
+  network_id  = openstack_networking_network_v2.public.id
+  cidr        = "172.18.218.0/23"
+  gateway_ip  = "172.18.218.1"
+  enable_dhcp = true
+
+  dns_nameservers = ["172.18.217.21", "172.18.217.22", "172.18.217.23"]
 
   allocation_pool {
-    start = "172.18.220.51"
-    end   = "172.18.220.254"
+    start = "172.18.218.51"
+    end   = "172.18.219.200"
   }
+}
+
+resource "openstack_networking_subnet_route_v2" "public-to-another-public" {
+  subnet_id        = openstack_networking_subnet_v2.public.id
+  destination_cidr = "172.18.217.0/24"
+  next_hop         = "172.18.218.2"
+}
+
+resource "openstack_networking_subnet_route_v2" "posral1" {
+  subnet_id        = openstack_networking_subnet_v2.public.id
+  destination_cidr = "172.18.217.21/32"
+  next_hop         = "172.18.218.2"
+}
+
+resource "openstack_networking_subnet_route_v2" "posral2" {
+  subnet_id        = openstack_networking_subnet_v2.public.id
+  destination_cidr = "172.18.217.22/32"
+  next_hop         = "172.18.218.2"
+}
+
+resource "openstack_networking_subnet_route_v2" "posral3" {
+  subnet_id        = openstack_networking_subnet_v2.public.id
+  destination_cidr = "172.18.217.23/32"
+  next_hop         = "172.18.218.2"
 }
