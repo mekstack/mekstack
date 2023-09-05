@@ -1,0 +1,41 @@
+#cloud-config
+package_update: true
+packages:
+  - nginx
+
+write_files:
+  - path: /etc/nginx/nginx.conf
+    permissions: '0644'
+    owner: root:root
+    content: |
+      worker_processes 8;
+      load_module /usr/lib/nginx/modules/ngx_stream_module.so;
+
+      events {
+          worker_connections  1024;
+      }
+
+      # Stream block for SSL termination
+      stream {
+          server {
+              resolver 172.18.217.21;
+              listen 443;
+              ssl_preread on;
+              proxy_pass $ssl_preread_server_name:443;
+          }
+      }
+
+      # Http block for redirecting HTTP to HTTPS
+      http {
+          server {
+              listen 80 default_server;
+              server_name _;
+              location / {
+                  return 301 https://$host$request_uri;
+              }
+          }
+      }
+
+runcmd:
+  - systemctl enable nginx
+  - systemctl restart nginx

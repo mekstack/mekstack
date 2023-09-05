@@ -3,13 +3,10 @@
 В каждой поддиректории находятся Terraform и Ansible файлы для деплоя
 определенного сервиса
 
-## Deploy docs
+## Admin
 
-Для использования терраформа необходимо зайти в проект docs и создать
-Application Credentials, добавить их в `clouds.yaml` и назвать их docs.
+Admin resources for bootstrapping the cloud
 
-Деплой ансиблом
+## SNEEDaaS (SNI-Enabled Encrypted Delivery as a Service)
 
-    export DOCS_ROOT=/home/ubuntu/mekstack.docs/
-    ansible-galaxy collection install community.general
-    ansible-playbook -i docs/inventory docs/deploy.yml
+Forwarding HTTPS proxy that does SNI DNS lookup and routes to that internal IP
