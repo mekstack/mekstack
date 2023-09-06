@@ -1,0 +1,27 @@
+#cloud-config
+package_update: true
+packages:
+  - dnsmasq
+
+write_files:
+  - path: /etc/dnsmasq.conf
+    permissions: '0644'
+    owner: root:root
+    content: |
+      port=5353
+      filterwin2k
+      no-hosts
+      no-resolv
+      log-facility=-
+      cache-size=0
+      server=172.18.217.21
+      server=172.18.217.22
+      server=172.18.217.23
+      all-servers
+      listen-address=127.0.0.1
+      no-dhcp-interface=
+      interface=ens3
+
+runcmd:
+  - systemctl enable dnsmasq
+  - systemctl restart dnsmasq

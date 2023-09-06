@@ -9,3 +9,11 @@ module "sneedaas" {
   key_pair = "admins"
   image_id = module.admin.image["jammy"].id
 }
+
+module "dnosha" {
+  source = "./dnosha"
+
+  name = "DNoS-HA"
+  key_pair = "admins"
+  image_id = module.admin.image["jammy"].id
+}
