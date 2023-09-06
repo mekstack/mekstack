@@ -12,7 +12,7 @@ resource "openstack_dns_recordset_v2" "horiozn" {
   description = "Mekstack horizon web dashboard address"
   ttl         = 3000
   type        = "A"
-  records     = ["172.18.217.200"]
+  records     = ["172.18.219.1"]
 }
 
 resource "openstack_dns_recordset_v2" "api" {
@@ -21,5 +21,5 @@ resource "openstack_dns_recordset_v2" "api" {
   description = "Mekstack service endpoints address"
   ttl         = 3000
   type        = "A"
-  records     = ["172.18.217.200"]
+  records     = ["172.18.219.1"]
 }
