@@ -101,3 +101,8 @@ hs-switches
 [monitoring:children]
 controllers
 
+#I tested against neutron bug
+[neutron-ovn-agent:children]
+controllers
+compute
+network

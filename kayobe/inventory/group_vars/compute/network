@@ -1,7 +1,7 @@
 ---
-ipmi_interface:     enp1s0f0
-admin_interface:    enp1s0f0.{{ admin_vlan }}
-storage_interface:  enp1s0f0.{{ storage_vlan }}
-internal_interface: enp1s0f0.{{ internal_vlan }}
+ipmi_interface:     "{{ mgmt_interface }}"
+admin_interface:    "{{ mgmt_interface }}.{{ admin_vlan }}"
+storage_interface:  "{{ mgmt_interface }}.{{ storage_vlan }}"
+internal_interface: "{{ mgmt_interface }}.{{ internal_vlan }}"
+tunnel_interface:   "{{ mgmt_interface }}.{{ tunnel_vlan }}"
 external_interface: enp{{ intel_center_port_number }}s0f0
-tunnel_interface:   enp{{ intel_center_port_number }}s0f1.{{ tunnel_vlan }}

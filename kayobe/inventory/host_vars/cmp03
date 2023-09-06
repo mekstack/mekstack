@@ -1,2 +1,3 @@
 ---
 intel_center_port_number: 4
+mgmt_interface: enp1s0f0
