@@ -44,7 +44,6 @@ enable_prometheus_msteams: "no"
 enable_grafana: "yes"
 
 enable_heat: "no"
-enable_designate: "yes"
 enable_mariabackup: "yes"
 octavia_loadbalancer_topology: "SINGLE"
 
@@ -75,10 +74,9 @@ octavia_amp_network:
     gateway_ip: 172.18.229.1
     enable_dhcp: yes
 
-enable_designate: "yes"
-enable_redis: "yes"
 designate_backend: "bind9"
-designate_ns_record: "mekstack.ru"
+designate_ns_record:
+  - "mekstack.ru"
 designate_enable_notifications_sink: "no"
 designate_forwarders_addresses: "8.8.8.8; 8.8.4.4"
 designate_recursion: "yes; allow-recursion { any; }"
