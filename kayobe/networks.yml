@@ -25,6 +25,9 @@ admin_mtu: 1500
 public_cidr: 172.18.217.0/24
 public_vlan: 217
 public_mtu: 1500
+public_routes:
+  - cidr: 172.18.229.0/24 # octavia-amp-net
+    gateway: 172.18.217.1
 
 # IPMI
 
