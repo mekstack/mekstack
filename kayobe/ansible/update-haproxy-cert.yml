@@ -1,0 +1,62 @@
+---
+- name: Update public wildcard TLS cert in haproxy_extra_certs volume
+  hosts: controllers
+  become: true
+  vars:
+    tmp_container_name: haproxy_certs_temp_container
+    certs_volume: haproxy_extra_certs
+    new_certificate: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:public_wildcard_tls_cert') }}"
+    new_certificate_sha256: "{{ new_certificate | hash('sha256') }}"
+  tasks:
+    - name: Check hash of existing certificate in haproxy container
+      community.docker.docker_container_exec:
+        container: "haproxy"
+        command: "sha256sum /etc/haproxy/extra_certs/public_wildcard.pem"
+      register: current_certificate_hash_output
+      changed_when: False
+      ignore_errors: True
+
+    - name: Set fact with current certificate hash
+      ansible.builtin.set_fact:
+        current_certificate_sha256: "{{ current_certificate_hash_output.stdout.split(' ')[0] }}"
+      when: current_certificate_hash_output.stdout is defined
+
+    - name: End play if current certificate is up-to-date
+      ansible.builtin.meta: end_play
+      when:
+        - current_certificate_sha256 is defined
+        - new_certificate_sha256 == current_certificate_sha256
+
+    - name: Check if haproxy_extra_certs volume exists
+      community.docker.docker_volume_info:
+        name: "haproxy_extra_certs"
+      register: volume_info
+
+    - name: Create haproxy_extra_certs volume
+      community.docker.docker_volume:
+        name: "haproxy_extra_certs"
+      when: volume_info.exists == False
+
+    - name: Create a temporary container with volume mounted
+      community.docker.docker_container:
+        name: "{{ tmp_container_name }}"
+        image: "alpine:latest"
+        state: "started"
+        volumes:
+          - "haproxy_extra_certs:/certs:rw"
+        command: "sleep 1d"
+
+    - name: Copy certificate into docker volume
+      community.docker.docker_container_copy_into:
+        container: "{{ tmp_container_name }}"
+        content: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:public_wildcard_tls_cert') }}"
+        container_path: "/certs/public_wildcard.pem"
+        mode: "0600"
+        owner_id: "0"
+        group_id: "0"
+
+    - name: Remove temporary container
+      community.docker.docker_container:
+        name: "{{ tmp_container_name }}"
+        state: "absent"
+        force_kill: True

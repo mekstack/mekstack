@@ -14,6 +14,27 @@ keystone_identity_providers:
 keystone_identity_mappings:
   - name: "miem-mapping"
     file: "{{ kayobe_config_path }}/kolla/federation/rules.json"
+cinder_public_base_endpoint: https://cinder.api.mekstack.ru
+nova_public_base_endpoint: https://nova.api.mekstack.ru
+heat_cfn_public_base_endpoint: https://heat-cfn.api.mekstack.ru
+
+heat_public_endpoint: https://heat.api.mekstack.ru/v1/%(tenant_id)s
+
+placement_public_endpoint: https://placement.api.mekstack.ru
+magnum_public_endpoint: https://magnum.api.mekstack.ru
+octavia_public_endpoint: https://octavia.api.mekstack.ru
+designate_public_endpoint: https://designate.api.mekstack.ru
+neutron_public_endpoint: https://neutron.api.mekstack.ru
+glance_public_endpoint: https://glance.api.mekstack.ru
+
+keystone_public_url: https://keystone.api.mekstack.ru
+novncproxy_base_url: https://novncproxy.api.mekstack.ru/vnc_lite.html
+
+horizon_tls_port: 4443
+
+haproxy_extra_volumes:
+  - "haproxy_extra_certs:/etc/haproxy/extra_certs:ro"
+
 
 neutron_ovn_distributed_fip: "yes"
 openstack_region_name: "MIEM"
