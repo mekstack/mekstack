@@ -48,9 +48,9 @@ resource "openstack_lb_monitor_v2" "lb" {
   name        = "${each.key} ${each.value}"
   pool_id     = openstack_lb_pool_v2.lb[each.key].id
   type        = "TCP"
-  delay       = 20
-  timeout     = 10
-  max_retries = 5
+  delay       = 2
+  timeout     = 1
+  max_retries = 2
 }
 
 resource "openstack_lb_members_v2" "lb" {

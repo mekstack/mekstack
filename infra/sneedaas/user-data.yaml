@@ -8,24 +8,42 @@ write_files:
     permissions: '0644'
     owner: root:root
     content: |
-      worker_processes 8;
+      worker_processes auto;
       load_module /usr/lib/nginx/modules/ngx_stream_module.so;
 
       events {
           worker_connections  1024;
       }
 
-      # Stream block for SSL termination
       stream {
+          map $ssl_preread_server_name $target {
+              # Exceptions to be routed to a VLAN 217
+              mekstack.ru 172.18.217.200:443;
+              cinder.api.mekstack.ru 172.18.217.200:443;
+              nova.api.mekstack.ru 172.18.217.200:443;
+              placement.api.mekstack.ru 172.18.217.200:443;
+              keystone.api.mekstack.ru 172.18.217.200:443;
+              magnum.api.mekstack.ru 172.18.217.200:443;
+              octavia.api.mekstack.ru 172.18.217.200:443;
+              heat.api.mekstack.ru 172.18.217.200:443;
+              designate.api.mekstack.ru 172.18.217.200:443;
+              neutron.api.mekstack.ru 172.18.217.200:443;
+              glance.api.mekstack.ru 172.18.217.200:443;
+              heat-cfn.api.mekstack.ru 172.18.217.200:443;
+              novncproxy.api.mekstack.ru 172.18.217.200:443;
+
+              # Default behavior: dns lookup
+              default $ssl_preread_server_name:443;
+          }
+
           server {
-              resolver 172.18.217.21;
+              resolver 172.18.218.100;
               listen 443;
               ssl_preread on;
-              proxy_pass $ssl_preread_server_name:443;
+              proxy_pass $target;
           }
       }
 
-      # Http block for redirecting HTTP to HTTPS
       http {
           server {
               listen 80 default_server;

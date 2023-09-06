@@ -1,7 +1,7 @@
 resource "openstack_compute_instance_v2" "instance" {
   count = 3
 
-  name            = "${var.name}${count.index + 1}"
+  name            = "${var.name}-${count.index + 1}"
   image_id        = var.image_id
   flavor_name     = "m2s.micro"
   key_pair        = var.key_pair
