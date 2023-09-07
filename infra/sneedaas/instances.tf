@@ -1,3 +1,8 @@
+resource "openstack_compute_servergroup_v2" "servergroup" {
+  name     = var.name
+  policies = ["anti-affinity"]
+}
+
 resource "openstack_compute_instance_v2" "instance" {
   count = 3
 
@@ -11,6 +16,10 @@ resource "openstack_compute_instance_v2" "instance" {
   network {
     uuid        = openstack_networking_network_v2.network.id
     fixed_ip_v4 = "10.0.0.${count.index + 11}"
+  }
+
+  scheduler_hints {
+    group = openstack_compute_servergroup_v2.servergroup.id
   }
 
   depends_on = [openstack_networking_subnet_v2.subnet]
