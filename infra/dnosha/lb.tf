@@ -48,7 +48,7 @@ resource "openstack_lb_members_v2" "lb" {
 
     content {
       address       = member.value
-      protocol_port = 5353  # nonstandard port because conflict with systemd-resolved server
+      protocol_port = 5353 # nonstandart port because 53 conflicts with systemd-resolved server
     }
   }
 }

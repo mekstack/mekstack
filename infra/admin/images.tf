@@ -1,7 +1,7 @@
 locals {
   images = [
     {
-      name        = "jammy"
+      name        = "Ubuntu 22.04.3 LTS"
       url         = "https://cloud-images.ubuntu.com/daily/server/jammy/current/jammy-server-cloudimg-amd64.img"
       min_disk_gb = 3
       min_ram_mb  = 512
@@ -10,7 +10,7 @@ locals {
       }
     },
     {
-      name        = "arch"
+      name        = "Arch Linux"
       url         = "https://geo.mirror.pkgbuild.com/images/latest/Arch-Linux-x86_64-cloudimg.qcow2"
       min_disk_gb = 3
       min_ram_mb  = 512
