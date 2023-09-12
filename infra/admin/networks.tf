@@ -22,7 +22,7 @@ resource "openstack_networking_subnet_v2" "public" {
   gateway_ip  = "172.18.218.1"
   enable_dhcp = true
 
-  dns_nameservers = ["172.18.218.100"]
+  dns_nameservers = ["172.18.218.200"]
 
   allocation_pool {
     start = "172.18.218.51"

@@ -37,7 +37,7 @@ write_files:
           }
 
           server {
-              resolver 172.18.218.100;
+              resolver 172.18.218.200;
               listen 443;
               ssl_preread on;
               proxy_pass $target;
