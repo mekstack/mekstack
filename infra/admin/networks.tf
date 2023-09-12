@@ -30,8 +30,6 @@ resource "openstack_networking_subnet_v2" "public" {
   }
 }
 
-resource "openstack_networking_subnet_route_v2" "public-to-another-public" {
-  subnet_id        = openstack_networking_subnet_v2.public.id
-  destination_cidr = "172.18.217.0/24"
-  next_hop         = "172.18.218.2"
+output "public_network" {
+  value = openstack_networking_network_v2.public
 }

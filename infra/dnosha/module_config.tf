@@ -18,3 +18,7 @@ variable "key_pair" {
 variable "image_id" {
   type = string
 }
+
+variable "public_network" {
+  type = any
+}

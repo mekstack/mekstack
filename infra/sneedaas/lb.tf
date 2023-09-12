@@ -7,7 +7,7 @@ resource "openstack_lb_loadbalancer_v2" "lb" {
 }
 
 resource "openstack_networking_floatingip_v2" "fip" {
-  pool        = data.openstack_networking_network_v2.public.name
+  pool        = var.public_network.name
   address     = "172.18.219.1"
   description = "HTTP(S) Reverse proxy gateway"
 }

@@ -10,13 +10,9 @@ resource "openstack_networking_subnet_v2" "subnet" {
   ip_version = 4
 }
 
-data "openstack_networking_network_v2" "public" {
-  name = "public"
-}
-
 resource "openstack_networking_router_v2" "router" {
   name                = var.name
-  external_network_id = data.openstack_networking_network_v2.public.id
+  external_network_id = var.public_network.id
 }
 
 resource "openstack_networking_router_interface_v2" "router_interface" {
