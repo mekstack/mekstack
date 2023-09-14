@@ -26,6 +26,7 @@ octavia_public_endpoint: https://octavia.api.mekstack.ru
 designate_public_endpoint: https://designate.api.mekstack.ru
 neutron_public_endpoint: https://neutron.api.mekstack.ru
 glance_public_endpoint: https://glance.api.mekstack.ru
+barbican_public_endpoint: https://barbican.api.mekstack.ru
 
 keystone_public_url: https://keystone.api.mekstack.ru
 novncproxy_base_url: https://novncproxy.api.mekstack.ru/vnc_lite.html

@@ -18,6 +18,7 @@
          {{ kolla_external_vip_address }} neutron.api.mekstack.ru
          {{ kolla_external_vip_address }} glance.api.mekstack.ru
          {{ kolla_external_vip_address }} heat-cfn.api.mekstack.ru
+         {{ kolla_external_vip_address }} barbican.api.mekstack.ru
          172.18.222.6 kayobe.mekstack.ru
         dest: /etc/hosts
         marker: "# {mark} ANSIBLE MANAGED API ENDPOINTS"
