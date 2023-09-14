@@ -29,6 +29,7 @@ write_files:
               designate.api.mekstack.ru 172.18.217.200:443;
               neutron.api.mekstack.ru 172.18.217.200:443;
               glance.api.mekstack.ru 172.18.217.200:443;
+              barbican.api.mekstack.ru 172.18.217.200:443;
               heat-cfn.api.mekstack.ru 172.18.217.200:443;
               novncproxy.api.mekstack.ru 172.18.217.200:443;
 
