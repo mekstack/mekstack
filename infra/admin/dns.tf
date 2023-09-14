@@ -23,3 +23,12 @@ resource "openstack_dns_recordset_v2" "api" {
   type        = "A"
   records     = ["172.18.219.1"]
 }
+
+resource "openstack_dns_zone_v2" "instances_zone" {
+  name        = "int.mekstack.ru."
+  email       = "19106@miem.hse.ru"
+  description = "Mekstack instances zone"
+  ttl         = 3000
+  type        = "PRIMARY"
+}
+

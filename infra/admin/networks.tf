@@ -5,6 +5,7 @@ resource "openstack_networking_network_v2" "public" {
   admin_state_up = true
   external       = true
   shared         = true
+  dns_domain     = "int.mekstack.ru."
 
   segments {
     network_type     = "vlan"
