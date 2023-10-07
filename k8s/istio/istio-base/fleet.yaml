@@ -1,0 +1,15 @@
+defaultNamespace: istio-system
+helm:
+  repo: https://istio-release.storage.googleapis.com/charts
+  chart: base
+  releaseName: istio-base
+  values:
+    defaultRevision: default
+
+diff:
+  comparePatches:
+  - apiVersion: admissionregistration.k8s.io/v1
+    kind: ValidatingWebhookConfiguration
+    name: istiod-default-validator
+    jsonPointers:
+    - "/webhooks"

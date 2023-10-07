@@ -1,0 +1,5 @@
+defaultNamespace: kube-system
+helm:
+  repo: https://istio-release.storage.googleapis.com/charts
+  chart: cni
+  releaseName: istio-cni
