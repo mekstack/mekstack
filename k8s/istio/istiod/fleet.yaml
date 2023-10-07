@@ -1,0 +1,11 @@
+defaultNamespace: istio-system
+helm:
+  repo: https://istio-release.storage.googleapis.com/charts
+  chart: istiod
+  releaseName: istiod
+  values:
+    istio_cni.enabled: true
+    pilot.autoscaleEnabled: false
+
+dependsOn:
+  - name: mekstack-k8s-istio-istio-cni
