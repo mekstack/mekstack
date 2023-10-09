@@ -1,0 +1,17 @@
+defaultNamespace: vault
+helm:
+  chart: oci://cr.yandex/yc-marketplace/yandex-cloud/vault/chart/vault
+  releaseName: vault
+  version: 0.25.0-1
+  valuesFiles:
+    - values.yaml
+
+diff:
+  comparePatches:
+  - apiVersion: v1
+    kind: Secret
+    name: kms-creds
+    namespace: vault
+    operations:
+    - {"op":"remove", "path":"/data/credentials.json"}
+    - {"op":"remove", "path":"/data"}
