@@ -1,0 +1,8 @@
+externalGateway: istio-ingress
+tlsSecret: wildcard-tls
+vservices:
+  - name: vault
+    host: vault.mekstack.ru
+    destination: vault.vault.svc.cluster.local
+    matchUriPrefix: "/"
+    portNumber: 8200

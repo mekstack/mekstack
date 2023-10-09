@@ -1,0 +1,7 @@
+apiVersion: v2
+name: vservice
+description: A Helm chart creating istio-vservices
+
+type: application
+
+version: "9999"
