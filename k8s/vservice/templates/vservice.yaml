@@ -20,5 +20,6 @@ spec:
     match:
       - uri:
           prefix: {{ $vservice.matchUriPrefix }}
+---
 {{- end }}
 
