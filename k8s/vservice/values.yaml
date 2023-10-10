@@ -6,3 +6,8 @@ vservices:
     destination: vault.vault.svc.cluster.local
     matchUriPrefix: "/"
     portNumber: 8200
+
+  - name: docs
+    host: docs.mekstack.ru
+    destination: docs.docs.svc.cluster.local
+    matchUriPrefix: "/"
