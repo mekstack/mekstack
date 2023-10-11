@@ -9,17 +9,19 @@ spec:
   gateways:
   - {{ $.Values.externalGateway }}
   http:
-  - name: http-{{ $vservice.name }}
+  {{- range $inner_index, $http := $vservice.http}}
+  - name: http-{{ $http.name }}
     route:
-    - destination:
-        host: {{ $vservice.destination | quote }}
-        {{- if hasKey $vservice "portNumber"}}
-        port:
-          number: {{$vservice.portNumber}}
+      - destination:
+          host: {{ $http.destination | quote }}
+        {{- if hasKey $http "portNumber"}}
+          port:
+            number: {{$http.portNumber}}
         {{- end}}
     match:
       - uri:
-          prefix: {{ $vservice.matchUriPrefix }}
+          prefix: {{ $http.matchUriPrefix }}
+  {{- end}}
 ---
 {{- end }}
 
