@@ -36,16 +36,16 @@ horizon_tls_port: 4443
 haproxy_extra_volumes:
   - "haproxy_extra_certs:/etc/haproxy/extra_certs:ro"
 
+magnum_tag: master-ubuntu-jammy
 
 neutron_ovn_distributed_fip: "yes"
 openstack_region_name: "MIEM"
 
+enable_cluster_user_trust: true
+
 enable_prometheus: "yes"
 enable_prometheus_msteams: "no"
-enable_grafana: "yes"
 
-enable_heat: "no"
-enable_mariabackup: "yes"
 octavia_loadbalancer_topology: "SINGLE"
 
 octavia_certs_country: RU
