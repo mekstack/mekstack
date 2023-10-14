@@ -1,19 +1,22 @@
 ---
 keystone_identity_providers:
-  - name: "google"
-    openstack_domain: "miem"
+  - name: "mekstack"
+    openstack_domain: "Default"
     protocol: "openid"
     is_default: "true"
-    authorized_domain: "miem.hse.ru"
-    identifier: "https://accounts.google.com"
-    public_name: "Google"
-    attribute_mapping: "miem-mapping"
+    identifier: "https://vault.mekstack.ru/v1/identity/oidc/provider/hse"
+    public_name: "Mekstack Vault"
+    attribute_mapping: "mapping"
     metadata_folder: "{{ kayobe_config_path }}/kolla/federation/idp"
-    certificate_file: "{{ kayobe_config_path }}/kolla/federation/03e84aed4ef4431014e8617567864c4efaaaede9.pem"
 
 keystone_identity_mappings:
-  - name: "miem-mapping"
+  - name: "mapping"
     file: "{{ kayobe_config_path }}/kolla/federation/rules.json"
+
+keystone_federation_oidc_provider_metadata_url: https://vault.mekstack.ru/v1/identity/oidc/provider/miem/.well-known/openid-configuration
+keystone_federation_oidc_scopes: "openid user"
+keystone_federation_oidc_response_type: "code"
+
 cinder_public_base_endpoint: https://cinder.api.mekstack.ru
 nova_public_base_endpoint: https://nova.api.mekstack.ru
 heat_cfn_public_base_endpoint: https://heat-cfn.api.mekstack.ru
@@ -35,6 +38,9 @@ horizon_tls_port: 4443
 
 haproxy_extra_volumes:
   - "haproxy_extra_certs:/etc/haproxy/extra_certs:ro"
+
+keystone_extra_volumes:
+  - "keystone_sso_redirect:/etc/keystone/wsgi-keystone.conf:ro"
 
 magnum_tag: master-ubuntu-jammy
 

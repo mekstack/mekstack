@@ -2,32 +2,7 @@
 - name: Copy IdP configuration
   hosts: localhost
   tasks:
-  - name: Copy IdP client configuration 
+  - name: Copy IdP client configuration
     ansible.builtin.template:
-      src: "{{ kayobe_config_path }}/kolla/templates/federation/accounts.google.com.client.j2"
-      dest: "{{ kayobe_config_path }}/kolla/federation/idp/accounts.google.com.client"
-
-  - name: Ensure that rules.json generator source code checkout exists
-    git:
-      repo: "git@github.com:mekstack/util"
-      dest: "{{ base_path }}/util"
-      key_file: "~/.ssh/mekstack-util"
-
-  - name: Install redis
-    become: true
-    apt:
-      name: redis
-
-  - name: Enable and start redis
-    become: true
-    systemd:
-      name: redis
-      state: started
-      enabled: true
-
-  - name: Install requirements
-    pip:
-      requirements: "{{ base_path }}/util/cabinet_sync/requirements.txt"
-
-        #- name: Generate rules.json
-
+      src: "{{ kayobe_config_path }}/kolla/templates/federation/client.j2"
+      dest: "{{ kayobe_config_path }}/kolla/federation/idp/vault.mekstack.ru%2Fv1%2Fidentity%2Foidc%2Fprovider%2Fhse.client"
