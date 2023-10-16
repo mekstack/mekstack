@@ -1,12 +1,13 @@
-# Terraform files for hosted services
+# Mekstack infrastructure
 
-В каждой поддиректории находятся Terraform и Ansible файлы для деплоя
-определенного сервиса
+## VPNaaS
 
-## Admin
+After deployment you should add security groups for wireguard because by default they are not added
 
-Admin resources for bootstrapping the cloud
+    openstack security group list | grep mekstack | awk '{ print $2 }' | parallel openstack security group rule create --dst-port 30000:32767 --protocol udp --description \'NodePort UDP\'
 
-## SNEEDaaS (SNI-Enabled Encrypted Delivery as a Service)
+## Vault
 
-Forwarding HTTPS proxy that does SNI DNS lookup and routes to that internal IP
+Set origins in CORS headers manually, because tf does not support that
+
+    vault write sys/config/cors allowed_origins="*"
