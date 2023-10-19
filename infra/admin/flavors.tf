@@ -5,28 +5,35 @@ locals {
       vcpus = 4
       ram   = 512
       swap  = 512
-      disk  = 5
+      disk  = 10
     },
     {
       name  = "small"
       vcpus = 6
       ram   = 1024
       swap  = 1024
-      disk  = 10
-    },
-    {
-      name  = "medium"
-      vcpus = 6
-      ram   = 2048
-      swap  = 2048
       disk  = 15
     },
     {
-      name  = "large"
+      name  = "medium"
       vcpus = 8
-      ram   = 4096
+      ram   = 2048
       swap  = 2048
       disk  = 20
+    },
+    {
+      name  = "large"
+      vcpus = 10
+      ram   = 4096
+      swap  = 2048
+      disk  = 25
+    },
+    {
+      name  = "xxl"
+      vcpus = 12
+      ram   = 5120
+      swap  = 2048
+      disk  = 30
     }
   ]
 }
