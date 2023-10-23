@@ -1,0 +1,9 @@
+apiVersion: fleet.cattle.io/v1alpha1
+kind: GitRepo
+metadata:
+  name: synok
+  namespace: fleet-local
+spec:
+  repo: https://github.com/mekstack/jobs
+  paths:
+  - synok/manifests
