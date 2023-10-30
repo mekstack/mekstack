@@ -1,0 +1,22 @@
+---
+- name: Deploy Docker Registry
+  hosts: test
+  become: yes
+  tasks:
+    - name: Install Docker Compose (if not installed)
+      apt:
+        name: docker-compose
+        state: present
+
+    - name: Create a directory for Docker Registry
+      file:
+        path: /opt/registry
+        state: directory
+
+    - name: Generate Docker Compose file for Registry
+      template:
+        src: registry/docker-compose.yml
+        dest: /opt/registry/docker-compose.yml
+
+    - name: Start Docker Registry
+      command: docker-compose -f /opt/registry/docker-compose.yml up -d
