@@ -1,34 +1,30 @@
 resource "openstack_networking_network_v2" "network" {
-  count = var.instance_count
-  name           = "network_${count.index + 1}"
+  name           = "network_1"
   admin_state_up = true
 }
 
 resource "openstack_networking_subnet_v2" "subnet" {
-  count       = var.instance_count
-  name        = "subnet_${count.index + 1}"
-  network_id  = openstack_networking_network_v2.network[count.index].id
-  cidr        = "172.16.${99 + count.index}.0/24"
+  name        = "subnet_1"
+  network_id  = openstack_networking_network_v2.network.id
+  cidr        = "172.16.98.0/23"
   ip_version  = 4
 }
 
 resource "openstack_networking_router_v2" "router" {
-  count           = var.instance_count
-  name            = "router_${count.index + 1}"
+  name            = "router_"
   admin_state_up  = true
   external_network_id = "4d942526-390d-40a1-8bd3-934405fd4281"
 }
 
 resource "openstack_networking_router_interface_v2" "router_interface" {
-  count     = var.instance_count
-  router_id = openstack_networking_router_v2.router[count.index].id
-  subnet_id = openstack_networking_subnet_v2.subnet[count.index].id
+
+  router_id = openstack_networking_router_v2.router.id
+  subnet_id = openstack_networking_subnet_v2.subnet.id
 }
 
 resource "openstack_networking_router_route_v2" "router_route" {
-  count = var.instance_count
 
-  router_id        = openstack_networking_router_v2.router[count.index].id
+  router_id        = openstack_networking_router_v2.router.id
   destination_cidr = "172.18.217.0/24"
   next_hop         = "172.18.218.2"
 }

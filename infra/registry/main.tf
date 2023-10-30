@@ -4,6 +4,11 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
   policies = ["anti-affinity"]
 }
 
+variable "instance_count" {
+  type    = number
+  default = 2
+}
+
 resource "openstack_compute_keypair_v2" "my-cloud-key" {
   name       = "my-key"
   public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhZECaYYf3DmbgyHQJWyJqTIqzQSbF87JUTX5eL/mRm"
@@ -19,7 +24,7 @@ resource "openstack_compute_instance_v2" "instance" {
   security_groups = ["default"]
 
   network {
-    uuid = openstack_networking_network_v2.network[count.index].id
+    uuid = openstack_networking_network_v2.network.id
   }
 
   scheduler_hints {
