@@ -28,3 +28,9 @@ module "magnum" {
 
   depends_on = [module.admin, module.sneedaas, module.dnosha]
 }
+
+module "registry" {
+  source = "./registry"
+  
+  depends_on = [module.admin, module.sneedaas, module.dnosha]
+}
