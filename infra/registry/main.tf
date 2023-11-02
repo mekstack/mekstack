@@ -4,11 +4,6 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
   policies = ["anti-affinity"]
 }
 
-variable "instance_count" {
-  type    = number
-  default = 2
-}
-
 resource "openstack_compute_keypair_v2" "my-cloud-key" {
   name       = "my-key"
   public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhZECaYYf3DmbgyHQJWyJqTIqzQSbF87JUTX5eL/mRm"
@@ -17,10 +12,10 @@ resource "openstack_compute_keypair_v2" "my-cloud-key" {
 resource "openstack_compute_instance_v2" "instance" {
   count = var.instance_count
 
-  name            = "instance-${count.index + 1}"
-  image_name      = "Mekstack Ubuntu 22.04.3 LTS"
-  flavor_name     = "m2s.small"
-  key_pair        = "${openstack_compute_keypair_v2.my-cloud-key.name}"
+  name            = "docker-registry_${count.index + 1}"
+  image_id        = var.image
+  flavor_name     = var.flavor
+  key_pair        = openstack_compute_keypair_v2.my-cloud-key.name
   security_groups = ["default"]
 
   network {
