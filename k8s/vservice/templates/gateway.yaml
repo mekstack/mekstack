@@ -1,7 +1,8 @@
+{{- range $index, $gateway := .Values.gateways }}
 apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
-  name: {{ .Values.externalGateway }}
+  name: {{ $gateway.name }}
 spec:
   servers:
   - port:
@@ -9,7 +10,7 @@ spec:
       name: http
       protocol: HTTP
     hosts:
-    {{- range $index, $vservice := .Values.vservices }}
+    {{- range $index, $vservice := $gateway.vservices }}
     - {{ $vservice.host }}
     {{- end }}
     tls:
@@ -20,6 +21,8 @@ spec:
       protocol: HTTPS
     tls:
       mode: SIMPLE
-      credentialName: {{ .Values.tlsSecret }}
+      credentialName: {{ $gateway.tlsSecret }}
     hosts:
-    - "*.mekstack.ru"
+    - "{{ $gateway.hosts }}"
+---
+{{- end }}
