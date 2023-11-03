@@ -16,6 +16,13 @@ vservices:
       destination: docs.docs.svc.cluster.local
       matchUriPrefix: "/"
 
+  - name: compliance-docs
+    host: docs.cloud.hse.ru
+    http:
+    - name: docs
+      destination: docs.compliance-docs.svc.cluster.local
+      matchUriPrefix: "/"
+
   - name: vpnaas-vs
     host: vpnaas.mekstack.ru
     http:
