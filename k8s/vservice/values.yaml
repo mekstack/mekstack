@@ -1,40 +1,46 @@
-externalGateway: istio-ingress
-tlsSecret: wildcard-tls
-vservices:
-  - name: vault
-    host: vault.mekstack.ru
-    http:
-    - name: vault
-      destination: vault.vault.svc.cluster.local
-      matchUriPrefix: "/"
-      portNumber: 8200
+gateways:
+  - hosts: "*.mekstack.ru"
+    name: mekstack
+    tlsSecret: wildcard-tls
+    vservices:
+      - name: vault
+        host: vault.mekstack.ru
+        http:
+        - name: vault
+          destination: vault.vault.svc.cluster.local
+          matchUriPrefix: "/"
+          portNumber: 8200
 
-  - name: docs
-    host: docs.mekstack.ru
-    http:
-    - name: docs
-      destination: docs.docs.svc.cluster.local
-      matchUriPrefix: "/"
+      - name: docs
+        host: docs.mekstack.ru
+        http:
+        - name: docs
+          destination: docs.docs.svc.cluster.local
+          matchUriPrefix: "/"
 
-  - name: compliance-docs
-    host: docs.cloud.hse.ru
-    http:
-    - name: docs
-      destination: docs.compliance-docs.svc.cluster.local
-      matchUriPrefix: "/"
+      - name: vpnaas-vs
+        host: vpnaas.mekstack.ru
+        http:
+        - name: confus
+          destination: confus.vpnaas.svc.cluster.local
+          matchUriPrefix: "/vpnaas.Confus"
+        - name: keys
+          destination: keys.vpnaas.svc.cluster.local
+          matchUriPrefix: "/vpnaas.Keys"
+        - name: wg
+          destination: wg.vpnaas.svc.cluster.local
+          matchUriPrefix: "/vpnaas.Wg"
+        - name: vpnaas
+          destination: web.vpnaas.svc.cluster.local
+          matchUriPrefix: "/"
 
-  - name: vpnaas-vs
-    host: vpnaas.mekstack.ru
-    http:
-    - name: confus
-      destination: confus.vpnaas.svc.cluster.local
-      matchUriPrefix: "/vpnaas.Confus"
-    - name: keys
-      destination: keys.vpnaas.svc.cluster.local
-      matchUriPrefix: "/vpnaas.Keys"
-    - name: wg
-      destination: wg.vpnaas.svc.cluster.local
-      matchUriPrefix: "/vpnaas.Wg"
-    - name: vpnaas
-      destination: web.vpnaas.svc.cluster.local
-      matchUriPrefix: "/"
+  - hosts: "*.cloud.hse.ru"
+    name: hse
+    tlsSecret: hse-wildcard-tls
+    vservices:
+      - name: compliance-docs
+        host: docs.cloud.hse.ru
+        http:
+        - name: docs
+          destination: docs.compliance-docs.svc.cluster.local
+          matchUriPrefix: "/"
