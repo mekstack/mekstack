@@ -1,5 +1,5 @@
 - name: Deploy Docker Registry
-  hosts: registries
+  hosts: all
   become: yes
   tasks:
     - name: Install Docker
@@ -22,10 +22,9 @@
       ansible.builtin.file:
         path: "/opt/registry"
         state: "directory"
-
     - name: Generate Docker Compose file for Registry
       ansible.builtin.template:
-        src: "registry/docker-compose.yml"
+        src: "docker-compose.yaml"
         dest: "/opt/registry/docker-compose.yml"
 
     - name: Start Docker Registry
@@ -33,4 +32,8 @@
         project_src: "/opt/registry"
         files:
         - docker-compose.yml
-        
+
+    - name: Delete Docker Compose file
+      ansible.builtin.file:
+        path: "/opt/registry/docker-compose.yml"
+        state: absent
