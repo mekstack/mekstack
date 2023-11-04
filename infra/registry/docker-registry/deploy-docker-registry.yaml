@@ -2,11 +2,22 @@
   hosts: registries
   become: yes
   tasks:
-    - name: Install Docker Compose (if not installed)
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: "docker.io"
+        state: "present"
+
+    - name: Start the Docker service
+      ansible.builtin.service:
+        name: "docker"
+        state: "started"
+        enabled: yes
+
+    - name: Install Docker Compose
       ansible.builtin.apt:
         name: "docker-compose"
         state: "present"
-
+        
     - name: Create a directory for Docker Registry
       ansible.builtin.file:
         path: "/opt/registry"
@@ -22,3 +33,4 @@
         project_src: "/opt/registry"
         files:
         - docker-compose.yml
+        
