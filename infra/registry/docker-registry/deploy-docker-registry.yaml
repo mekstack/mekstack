@@ -17,7 +17,7 @@
       ansible.builtin.apt:
         name: "docker-compose"
         state: "present"
-        
+
     - name: Create a directory for Docker Registry
       ansible.builtin.file:
         path: "/opt/registry"
