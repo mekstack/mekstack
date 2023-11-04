@@ -14,7 +14,7 @@ variable "instance_count" {
 
 variable "image" {
   type = string
-  default = "Ubuntu 22.04.3 LTS"
+  default = "Mekstack Ubuntu 22.04.3 LTS"
 }
 
 variable "flavor" {
