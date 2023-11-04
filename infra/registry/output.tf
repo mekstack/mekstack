@@ -1,24 +1,12 @@
-output "vm-name" {
-  value = "${openstack_compute_instance_v2.instance[*].name}"
-}
- 
-output "vm-id" {
-  value = "${openstack_compute_instance_v2.instance[*].id}"
-}
- 
-output "vm-ips" {
-  value = "${openstack_compute_instance_v2.instance[*].network[0].fixed_ip_v4}"
-}
+resource "null_resource" "write_hosts_file" {
+  triggers = {
+    ip_addresses = sha256(jsonencode(openstack_networking_floatingip_v2.fip[*].address))
+  }
 
-output "subnt_1" {
-  value = "${openstack_networking_subnet_v2.subnet[*].id}"
+  provisioner "local-exec" {
+    command = <<-EOT
+      echo "${join("\n", openstack_networking_floatingip_v2.fip[*].address)}" > ./docker-registry/hosts
+      echo "[defaults]\ninventory = ./hosts\nremote_user = ubuntu\nhost_key_checking = false" > ./docker-registry/ansible.cfg
+    EOT
+  }
 }
-
-output "vm-floating-ip" {
-  value = openstack_networking_floatingip_v2.fip[*].address
-}
-
-output "lb_loadbalancer_id" {
-  value = openstack_lb_loadbalancer_v2.lb.id
-}
-
