@@ -12,6 +12,11 @@ variable "instance_count" {
   type    = number
   default = 2
 }
+
+variable "key_pair" {
+  type    = string
+}
+
 variable "image" {
   type = string
   default = "Mekstack Ubuntu 22.04.3 LTS"
@@ -36,3 +41,5 @@ variable "router" {
   type = string
   default = "registry_router_1"
 }
+
+
