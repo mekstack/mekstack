@@ -6,7 +6,7 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
 
 resource "openstack_compute_keypair_v2" "my-cloud-key" {
   name       = "my-key"
-  public_key = var.key_pair
+  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhZECaYYf3DmbgyHQJWyJqTIqzQSbF87JUTX5eL/mRm"
 }
 
 resource "openstack_compute_instance_v2" "instance" {
@@ -15,7 +15,7 @@ resource "openstack_compute_instance_v2" "instance" {
   name            = "docker-registry_${count.index + 1}"
   image_name      = var.image
   flavor_name     = var.flavor
-  key_pair        = openstack_compute_keypair_v2.my-cloud-key.name
+  key_pair        = var.key_pair
   security_groups = ["default"]
 
   network {
