@@ -56,10 +56,6 @@ resource "vault_identity_oidc_client" "keystone" {
   access_token_ttl = 3600
 }
 
-data "vault_identity_oidc_client_creds" "keystone" {
-  name = vault_identity_oidc_client.keystone.name
-}
-
 resource "vault_identity_oidc_client" "vpnaas" {
   name             = "vpnaas"
   client_type      = "public"
@@ -68,10 +64,6 @@ resource "vault_identity_oidc_client" "vpnaas" {
   key              = vault_identity_oidc_key.hse.id
   id_token_ttl     = 600
   access_token_ttl = 1200
-}
-
-data "vault_identity_oidc_client_creds" "vpnaas" {
-  name = vault_identity_oidc_client.vpnaas.name
 }
 
 // === End OpenID Clients Configuration ===
@@ -89,10 +81,7 @@ resource "vault_identity_oidc_scope" "user" {
 
 resource "vault_identity_oidc_provider" "hse" {
   name = "hse"
-  allowed_client_ids = [
-    data.vault_identity_oidc_client_creds.keystone.client_id,
-    data.vault_identity_oidc_client_creds.vpnaas.client_id
-  ]
+  allowed_client_ids = ["*"]
   scopes_supported = ["user"]
 }
 
