@@ -15,7 +15,7 @@ resource "openstack_compute_instance_v2" "instance" {
   name            = "docker-registry_${count.index + 1}"
   image_name      = var.image
   flavor_name     = var.flavor
-  key_pair        = var.key_pair
+  key_pair        = openstack_compute_keypair_v2.my-cloud-key.name
   security_groups = ["default"]
 
   network {
