@@ -68,6 +68,16 @@ resource "vault_identity_oidc_client" "vpnaas" {
 
 // === End OpenID Clients Configuration ===
 
+resource "vault_identity_oidc_scope" "email" {
+  name = "email"
+  template = base64encode(<<EOF
+    {
+        "email": {{ identity.entity.aliases.auth_oidc_a69d5a95.name }}
+    }
+    EOF
+  )
+}
+
 resource "vault_identity_oidc_scope" "user" {
   name = "user"
   template = base64encode(<<EOF
@@ -82,7 +92,7 @@ resource "vault_identity_oidc_scope" "user" {
 resource "vault_identity_oidc_provider" "hse" {
   name = "hse"
   allowed_client_ids = ["*"]
-  scopes_supported = ["user"]
+  scopes_supported = ["user", "email"]
 }
 
 output "hse_accessor" {
