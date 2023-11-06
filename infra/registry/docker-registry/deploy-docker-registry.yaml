@@ -4,8 +4,11 @@
   tasks:
     - name: Install Docker
       ansible.builtin.apt:
-        name: "docker.io"
+        name: "{{ item }}"
         state: "present"
+      loop:
+        - "docker.io"
+        - "docker-compose"
 
     - name: Start the Docker service
       ansible.builtin.service:
@@ -13,17 +16,13 @@
         state: "started"
         enabled: yes
 
-    - name: Install Docker Compose
-      ansible.builtin.apt:
-        name: "docker-compose"
-        state: "present"
-
     - name: Create a directory for Docker Registry
       ansible.builtin.file:
         path: "/opt/registry"
         state: "directory"
-    - name: Generate Docker Compose file for Registry
-      ansible.builtin.template:
+
+    - name: Copy Docker Compose file for Registry
+      ansible.builtin.copy:
         src: "docker-compose.yaml"
         dest: "/opt/registry/docker-compose.yml"
 
