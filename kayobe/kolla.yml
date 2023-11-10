@@ -501,5 +501,5 @@ kolla_internal_tls_cert: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:interna
 # used. Default value is "{{ no_proxy }}".
 #kolla_no_proxy:
 
-kolla_federation_google_client_id:     "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_google_client_id') }}"
-kolla_federation_google_client_secret: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_google_client_secret') }}"
+kolla_keystone_federation_client_id:     "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_mekstack_client_id') }}"
+kolla_keystone_federation_client_secret: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_mekstack_client_secret') }}"
