@@ -20,7 +20,7 @@ resource "openstack_dns_recordset_v2" "services" {
   name        = "*.mekstack.ru."
   ttl         = 3000
   type        = "A"
-  records     = ["172.18.218.72"]
+  records     = ["172.18.219.137"]
 }
 
 resource "openstack_dns_recordset_v2" "api" {
