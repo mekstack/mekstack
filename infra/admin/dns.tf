@@ -15,6 +15,15 @@ resource "openstack_dns_recordset_v2" "horiozn" {
   records     = ["172.18.219.1"]
 }
 
+resource "openstack_dns_recordset_v2" "grafana" {
+  zone_id     = openstack_dns_zone_v2.mekstack_zone.id
+  name        = "status.mekstack.ru."
+  description = "Mekstack grafana web dashboard address"
+  ttl         = 3000
+  type        = "A"
+  records     = ["172.18.219.1"]
+}
+
 resource "openstack_dns_recordset_v2" "services" {
   zone_id     = openstack_dns_zone_v2.mekstack_zone.id
   name        = "*.mekstack.ru."
