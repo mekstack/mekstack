@@ -4,18 +4,14 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
   policies = ["anti-affinity"]
 }
 
-resource "openstack_compute_keypair_v2" "my-cloud-key" {
-  name       = "my-key"
-  public_key = var.key_pair
-}
 
 resource "openstack_compute_instance_v2" "instance" {
-  count = var.instance_count
+  count = var.instances
 
-  name            = "docker-registry_${count.index + 1}"
-  image_name      = var.image
-  flavor_name     = var.flavor
-  key_pair        = openstack_compute_keypair_v2.my-cloud-key.name
+  name            = "docker-registry0${count.index + 1}"
+  image_id        = var.image_id
+  flavor_name     = "m2s.small"
+  key_pair        = var.key_pair
   security_groups = ["default"]
 
   network {

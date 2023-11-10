@@ -8,38 +8,25 @@ terraform {
 }
 
 
-variable "instance_count" {
+variable "instances" {
   type    = number
-  default = 2
+}
+
+variable "name" {
+  type = string
 }
 
 variable "key_pair" {
-  type    = string
+  type = string
 }
 
-variable "image" {
+variable "image_id" {
   type = string
-  default = "Mekstack Ubuntu 22.04.3 LTS"
 }
 
-variable "flavor" {
-  type = string
-  default = "m2s.small"
+variable "public_network" {
+  type = any
 }
 
-variable "network" {
-  type = string
-  default = "registry_network_1"
-}
-
-variable "subnet" {
-  type = string
-  default = "registry_subnet_1"
-}
-
-variable "router" {
-  type = string
-  default = "registry_router_1"
-}
 
 

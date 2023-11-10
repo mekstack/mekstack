@@ -6,7 +6,7 @@ locals {
 }
 
 resource "openstack_lb_loadbalancer_v2" "lb" {
-  name                  = "lb1-https"
+  name                  = var.name
   vip_subnet_id         = openstack_networking_subnet_v2.subnet.id
   loadbalancer_provider = "ovn"
 
