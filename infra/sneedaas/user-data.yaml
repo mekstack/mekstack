@@ -19,6 +19,7 @@ write_files:
           map $ssl_preread_server_name $target {
               # Exceptions to be routed to a VLAN 217
               mekstack.ru 172.18.217.200:443;
+              status.mekstack.ru 172.18.217.200:443;
               cinder.api.mekstack.ru 172.18.217.200:443;
               nova.api.mekstack.ru 172.18.217.200:443;
               placement.api.mekstack.ru 172.18.217.200:443;
