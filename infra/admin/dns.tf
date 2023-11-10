@@ -49,3 +49,19 @@ resource "openstack_dns_zone_v2" "instances_zone" {
   type        = "PRIMARY"
 }
 
+resource "openstack_dns_zone_v2" "hse_zone" {
+  name        = "cloud.hse.ru."
+  email       = "19106@miem.hse.ru"
+  description = "Mekstack project zone"
+  ttl         = 3000
+  type        = "PRIMARY"
+}
+
+resource "openstack_dns_recordset_v2" "hse_docs" {
+  zone_id     = openstack_dns_zone_v2.hse_zone.id
+  name        = "docs.cloud.hse.ru."
+  description = "Mekstack service endpoints address"
+  ttl         = 3000
+  type        = "A"
+  records     = ["172.18.219.137"]
+}
