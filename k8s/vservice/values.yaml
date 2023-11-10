@@ -15,8 +15,7 @@ gateways:
         host: docs.mekstack.ru
         http:
         - name: docs
-          destination: docs.compliance-docs.svc.cluster.local
-            #destination: docs.docs.svc.cluster.local
+          destination: docs.docs.svc.cluster.local
           matchUriPrefix: "/"
 
       - name: vpnaas-vs
@@ -35,13 +34,13 @@ gateways:
           destination: web.vpnaas.svc.cluster.local
           matchUriPrefix: "/"
 
-            #   - hosts: "*.cloud.hse.ru"
-            #     name: hse
-            #     tlsSecret: hse-wildcard-tls
-            #     vservices:
-            #       - name: compliance-docs
-            #         host: docs.cloud.hse.ru
-            #         http:
-            #         - name: compliance-docs
-            #           destination: docs.compliance-docs.svc.cluster.local
-            #           matchUriPrefix: "/"
+  - hosts: "*.cloud.hse.ru"
+    name: hse
+    tlsSecret: hse-wildcard-tls
+    vservices:
+      - name: compliance-docs
+        host: docs.cloud.hse.ru
+        http:
+        - name: docs
+          destination: docs.compliance-docs.svc.cluster.local
+          matchUriPrefix: "/"
