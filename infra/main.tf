@@ -28,3 +28,13 @@ module "magnum" {
 
   depends_on = [module.admin, module.sneedaas, module.dnosha]
 }
+
+module "registry" {
+  source = "./registry"
+
+  instances      = 2
+  name           = "Registry"
+  key_pair       = "admins"
+  image_id       = module.admin.image["Ubuntu 22.04.3 LTS"].id
+  public_network = module.admin.public_network
+}

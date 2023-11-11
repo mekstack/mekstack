@@ -1,0 +1,38 @@
+- name: Deploy Docker Registry
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install Docker
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: "present"
+      loop:
+        - "docker.io"
+        - "docker-compose"
+
+    - name: Start the Docker service
+      ansible.builtin.service:
+        name: "docker"
+        state: "started"
+        enabled: yes
+
+    - name: Create a directory for Docker Registry
+      ansible.builtin.file:
+        path: "/opt/registry"
+        state: "directory"
+
+    - name: Copy Docker Compose file for Registry
+      ansible.builtin.copy:
+        src: "docker-compose.yaml"
+        dest: "/opt/registry/docker-compose.yml"
+
+    - name: Start Docker Registry
+      community.docker.docker_compose:
+        project_src: "/opt/registry"
+        files:
+        - docker-compose.yml
+
+    - name: Delete Docker Compose file
+      ansible.builtin.file:
+        path: "/opt/registry/docker-compose.yml"
+        state: absent
