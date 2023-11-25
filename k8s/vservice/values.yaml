@@ -44,3 +44,14 @@ gateways:
         - name: docs
           destination: docs.compliance-docs.svc.cluster.local
           matchUriPrefix: "/"
+
+  - hosts: "*.docs.staging.mekstack.ru"
+    name: staging-docs
+    tlsSecret: docs-wildcard-tls
+    vservices:
+      - name: staging-docs
+        host: "*.docs.staging.mekstack.ru"
+        http:
+        - name: docs
+          destination: docs.docs.svc.cluster.local
+          matchUriPrefix: "/"
