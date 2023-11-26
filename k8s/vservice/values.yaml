@@ -47,7 +47,7 @@ gateways:
 
   - hosts: "*.docs.staging.mekstack.ru"
     name: staging-docs
-    tlsSecret: docs-wildcard-tls
+    tlsSecret: staging-docs-tls
     vservices:
       - name: staging-docs
         host: "*.docs.staging.mekstack.ru"
