@@ -11,7 +11,7 @@ spec:
       protocol: HTTP
     hosts:
     {{- range $index, $vservice := $gateway.vservices }}
-    - {{ $vservice.host }}
+    - "{{ $vservice.host }}"
     {{- end }}
     tls:
       httpsRedirect: true
