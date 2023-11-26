@@ -1,7 +1,6 @@
 gateways:
-  - hosts: "*.mekstack.ru"
-    name: mekstack
-    tlsSecret: wildcard-tls
+  - name: mekstack
+    tlsSecret: wildcard-tls # for *.mekstack.ru
     vservices:
       - name: vault
         host: vault.mekstack.ru
@@ -34,9 +33,8 @@ gateways:
           destination: web.vpnaas.svc.cluster.local
           matchUriPrefix: "/"
 
-  - hosts: "*.cloud.hse.ru"
-    name: hse
-    tlsSecret: hse-wildcard-tls
+  - name: hse
+    tlsSecret: hse-wildcard-tls # for *.cloud.hse.ru
     vservices:
       - name: compliance-docs
         host: docs.cloud.hse.ru
@@ -45,9 +43,8 @@ gateways:
           destination: docs.compliance-docs.svc.cluster.local
           matchUriPrefix: "/"
 
-  - hosts: "*.docs.staging.mekstack.ru"
-    name: staging-docs
-    tlsSecret: staging-docs-tls
+  - name: staging-docs
+    tlsSecret: staging-docs-tls # for *.docs.staging.mekstack.ru
     vservices:
       - name: staging-docs
         host: "*.docs.staging.mekstack.ru"

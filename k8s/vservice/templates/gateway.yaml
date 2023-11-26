@@ -23,6 +23,8 @@ spec:
       mode: SIMPLE
       credentialName: {{ $gateway.tlsSecret }}
     hosts:
-    - "{{ $gateway.hosts }}"
+    {{- range $index, $vservice := $gateway.vservices }}
+    - "{{ $vservice.host }}"
+    {{- end }}
 ---
 {{- end }}
