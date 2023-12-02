@@ -52,3 +52,6 @@ gateways:
         - name: docs
           destination: docs.docs.svc.cluster.local
           matchUriPrefix: "/"
+
+vault:
+  serviceMountName: k8s
