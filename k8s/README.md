@@ -10,10 +10,10 @@ To deploy mekstack k8s resources install fleet and it will do the job
     apiVersion: fleet.cattle.io/v1alpha1
     kind: GitRepo
     metadata:
-      name: mekstack
+      name: mekstack-deps
       namespace: fleet-local
     spec:
       repo: https://github.com/mekstack/mekstack
       paths:
-      - k8s
+      - k8s/deps
     " | kubectl apply -f -

@@ -4,6 +4,7 @@ metadata:
   name: vpnaas
   namespace: fleet-local
 spec:
-  repo: https://github.com/mekstack/vpnaas
+  repo: https://github.com/mekstack/vpnaas.git
   paths:
   - helm
+# Vpnaas was changed to use existing claim & sc

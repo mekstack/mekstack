@@ -1,5 +1,4 @@
 defaultNamespace: vault-system
 helm:
-  chart: oci://cr.yandex/yc-marketplace/yandex-cloud/vault/chart/vault
   chart: git::https://git.miem.hse.ru/1246/vault-secret-operator
   releaseName: vault-secrets-operator
