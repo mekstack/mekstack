@@ -15,3 +15,4 @@ diff:
     operations:
     - {"op":"remove", "path":"/data/credentials.json"}
     - {"op":"remove", "path":"/data"}
+# just redeploy yourself finally

@@ -4,6 +4,3 @@ helm:
   releaseName: mekstack-vservices
   valuesFiles:
     - values.yaml
-dependsOn:
-  - name: mekstack-k8s-istio-istio-ingress
-  - name: mekstack-k8s-vault-secrets-operator

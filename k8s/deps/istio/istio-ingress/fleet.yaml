@@ -5,5 +5,5 @@ helm:
   releaseName: istio-ingress
 
 dependsOn:
-  - name: mekstack-k8s-istio-istio-base
-  - name: mekstack-k8s-istio-istiod
+  - name: mekstack-deps-k8s-deps-istio-istio-base
+  - name: mekstack-deps-k8s-deps-istio-istiod
