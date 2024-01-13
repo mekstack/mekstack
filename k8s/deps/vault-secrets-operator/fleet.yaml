@@ -1,4 +1,4 @@
 defaultNamespace: vault-system
 helm:
-  chart: git::https://git.miem.hse.ru/1246/vault-secret-operator
+  chart: git::https://github.com/hashicorp/vault-secrets-operator/
   releaseName: vault-secrets-operator
