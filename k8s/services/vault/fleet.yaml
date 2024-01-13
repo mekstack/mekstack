@@ -1,8 +1,7 @@
 defaultNamespace: vault
 helm:
-  chart: oci://cr.yandex/yc-marketplace/yandex-cloud/vault/chart/vault
+  chart: git::https://github.com/hashicorp/vault-helm/
   releaseName: vault
-  version: 0.25.0-1
   valuesFiles:
     - values.yaml
 
