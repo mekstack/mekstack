@@ -1,4 +1,3 @@
-defaultNamespace: synok
 apiVersion: fleet.cattle.io/v1alpha1
 kind: GitRepo
 metadata:
