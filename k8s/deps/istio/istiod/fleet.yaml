@@ -8,4 +8,4 @@ helm:
     pilot.autoscaleEnabled: false
 
 dependsOn:
-  - name: mekstack-k8s-istio-istio-cni
+  - name: mekstack-deps-k8s-deps-istio-istio-cni

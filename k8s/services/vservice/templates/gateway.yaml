@@ -11,7 +11,7 @@ spec:
       protocol: HTTP
     hosts:
     {{- range $index, $vservice := $gateway.vservices }}
-    - {{ $vservice.host }}
+    - "{{ $vservice.host }}"
     {{- end }}
     tls:
       httpsRedirect: true
@@ -23,6 +23,8 @@ spec:
       mode: SIMPLE
       credentialName: {{ $gateway.tlsSecret }}
     hosts:
-    - "{{ $gateway.hosts }}"
+    {{- range $index, $vservice := $gateway.vservices }}
+    - "{{ $vservice.host }}"
+    {{- end }}
 ---
 {{- end }}

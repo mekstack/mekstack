@@ -6,7 +6,7 @@ metadata:
   name: {{ $vservice.name }}
 spec:
   hosts:
-  - {{ $vservice.host }}
+  - "{{ $vservice.host }}"
   gateways:
   - {{ $gateway.name }}
   http:

@@ -1,0 +1,3 @@
+defaultNamespace: kube-system
+dependsOn:
+  - name: mekstack-deps-k8s-deps-vault-secrets-operator
