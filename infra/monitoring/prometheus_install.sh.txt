@@ -1,0 +1,5 @@
+sudo apt update && sudo apt upgrade && sudo apt install wget
+sudo groupadd --system prometheus
+sudo useradd -s /sbin/nologin --system -g prometheus prometheus
+sudo mkdir /etc/prometheus && sudo mkdir /var/lib/prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v2.43.0/prometheus-2.43.0.linux-amd64.tar.gz && tar vxf prometheus*.tar.gz && cd prometheus*/

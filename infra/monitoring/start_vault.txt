@@ -1,0 +1,12 @@
+docker run \
+    --cap-add=IPC_LOCK \
+    --detach \
+    --ip 10.42.74.100 \
+    --name learn-vault \
+    --network learn-vault \
+    -d \
+    -p 8200:8200 \
+    --rm \
+    --volume $LEARN_VAULT/vault-config:/vault/config \
+    --volume $LEARN_VAULT/vault-data:/vault/data \
+    vault:1.13.3 server
