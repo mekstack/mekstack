@@ -6,11 +6,11 @@ resource "openstack_compute_servergroup_v2" "servergroup" {
 
 
 resource "openstack_compute_instance_v2" "instance" {
-  count = var.instances
+ count = 2
 
-  name            = "docker-registry0${count.index + 1}"
+  name            = "${var.name}-${count.index + 1}"
   image_id        = var.image_id
-  flavor_name     = "m2s.small"
+  flavor_name     = "m2s.medium"
   key_pair        = var.key_pair
   security_groups = ["default"]
 
