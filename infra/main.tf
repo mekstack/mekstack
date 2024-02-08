@@ -32,7 +32,6 @@ module "magnum" {
 module "registry" {
   source = "./registry"
 
-  instances      = 2
   name           = "Registry"
   key_pair       = "admins"
   image_id       = module.admin.image["Ubuntu 22.04.3 LTS"].id
