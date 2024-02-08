@@ -1,15 +1,16 @@
-locals {
-  protocol_ports = {
-    "HTTP" : 80,
-    "HTTPS" : 443
-  }
-}
-
 resource "openstack_lb_loadbalancer_v2" "lb" {
   name                  = var.name
   vip_subnet_id         = openstack_networking_subnet_v2.subnet.id
   loadbalancer_provider = "ovn"
 
+  depends_on = [openstack_compute_instance_v2.instance]
+}
+
+locals {
+  protocol_ports = {
+    "HTTP" : 80,
+    "HTTPS" : 443
+  }
 }
 
 resource "openstack_lb_listener_v2" "lb" {
