@@ -2,14 +2,9 @@ terraform {
   required_providers {
     openstack = {
       source  = "terraform-provider-openstack/openstack"
-      version = "1.52.1"
+      version = "~> 1.52.1"
     }
   }
-}
-
-
-variable "instances" {
-  type    = number
 }
 
 variable "name" {
@@ -27,6 +22,3 @@ variable "image_id" {
 variable "public_network" {
   type = any
 }
-
-
-
