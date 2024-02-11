@@ -1,11 +1,17 @@
-- name: Deploy Docker Registry
+---
+- name: Deploy Docker Registry with Nginx
   hosts: all
   become: yes
   tasks:
-    - name: Install Docker
+    - name: Update apt packages
+      ansible.builtin.apt:
+        update_cache: yes
+        upgrade: safe
+
+    - name: Install Docker and Docker Compose
       ansible.builtin.apt:
         name: "{{ item }}"
-        state: "present"
+        state: present
       loop:
         - "docker.io"
         - "docker-compose"
@@ -13,13 +19,13 @@
     - name: Start the Docker service
       ansible.builtin.service:
         name: "docker"
-        state: "started"
+        state: started
         enabled: yes
 
     - name: Create a directory for Docker Registry
       ansible.builtin.file:
         path: "/opt/registry"
-        state: "directory"
+        state: directory
 
     - name: Copy Docker Compose file for Registry
       ansible.builtin.copy:
@@ -30,9 +36,37 @@
       community.docker.docker_compose:
         project_src: "/opt/registry"
         files:
-        - docker-compose.yml
+          - docker-compose.yml
 
-    - name: Delete Docker Compose file
+    - name: Install Nginx
+      ansible.builtin.apt:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - "nginx"
+
+    - name: Copy Nginx configuration file for Docker Registry
+      ansible.builtin.copy:
+        src: "registry"
+        dest: "/etc/nginx/sites-available/registry"
+
+    - name: Create symlink for Nginx configuration
       ansible.builtin.file:
-        path: "/opt/registry/docker-compose.yml"
+        src: "/etc/nginx/sites-available/registry"
+        dest: "/etc/nginx/sites-enabled/registry"
+        state: link
+
+    - name: Delete default Nginx configuration files
+      ansible.builtin.file:
+        path: "/etc/nginx/sites-available/default"
         state: absent
+
+    - name: Delete symlink to default Nginx configuration
+      ansible.builtin.file:
+        path: "/etc/nginx/sites-enabled/default"
+        state: absent
+
+    - name: Restart Nginx service
+      ansible.builtin.service:
+        name: nginx
+        state: restarted
