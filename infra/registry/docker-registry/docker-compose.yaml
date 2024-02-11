@@ -3,9 +3,14 @@ version: '3'
 services:
   registry:
     image: registry:2
-    container_name: docker_registry
+    container_name: registry
     restart: always
     ports:
       - "5000:5000"
+    environment:
+      - REGISTRY_PROXY_REMOTEURL=https://registry-1.docker.io
+      - REGISTRY_STORAGE_FILESYSTEM_ROOTDIRECTORY=/data
     volumes:
-      - /opt/registry/data:/var/lib/registry
+      - ./data:/data
+
+
