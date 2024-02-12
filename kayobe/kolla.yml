@@ -335,7 +335,7 @@ kolla_enable_grafana: true
 #kolla_enable_kafka:
 #kolla_enable_keepalived:
 #kolla_enable_keystone:
-#kolla_enable_keystone_federation:
+kolla_enable_keystone_federation: true
 #kolla_enable_keystone_horizon_policy_file:
 #kolla_enable_kibana:
 #kolla_enable_kuryr:
