@@ -20,11 +20,18 @@ module "dnosha" {
   public_network = module.admin.public_network
 }
 
-module "magnum" {
-  source = "./magnum"
+module "k3s" {
+  source = "/home/ubuntu/mekstack/k3s-openstack-tf-module/"
 
-  image          = "Fedora CoreOS 38"
-  public_network = module.admin.public_network
+  name                = "k3s-prod"
+  key_pair            = "admins"
+  master_node_count   = 3
+  image_id            = module.admin.image["Ubuntu 22.04.3 LTS"].id
+  public_network_name = module.admin.public_network.name
+  flavor_name         = "m2s.large"
+  kubeapi_lb          = true
+  add_dns_record      = true
+  kubeapi_lb_dns_fqdn = "kube3.local."
 
   depends_on = [module.admin, module.sneedaas, module.dnosha]
 }
