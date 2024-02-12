@@ -25,11 +25,11 @@ resource "openstack_dns_recordset_v2" "grafana" {
 }
 
 resource "openstack_dns_recordset_v2" "services" {
-  zone_id     = openstack_dns_zone_v2.mekstack_zone.id
-  name        = "*.mekstack.ru."
-  ttl         = 3000
-  type        = "A"
-  records     = ["172.18.219.137"]
+  zone_id = openstack_dns_zone_v2.mekstack_zone.id
+  name    = "*.mekstack.ru."
+  ttl     = 3000
+  type    = "A"
+  records = ["172.18.218.229"]
 }
 
 resource "openstack_dns_recordset_v2" "api" {
@@ -63,5 +63,6 @@ resource "openstack_dns_recordset_v2" "hse_docs" {
   description = "Mekstack service endpoints address"
   ttl         = 3000
   type        = "A"
-  records     = ["172.18.219.137"]
+  records     = ["172.18.218.229"]
+}
 }

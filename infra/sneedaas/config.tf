@@ -2,9 +2,14 @@ terraform {
   required_providers {
     openstack = {
       source  = "terraform-provider-openstack/openstack"
-      version = "~> 1.52.1"
+      version = "~> 1.53.0"
     }
   }
+}
+
+provider "openstack" {
+  user_name   = "admin"
+  tenant_name = "admin"
 }
 
 variable "name" {
@@ -15,10 +20,10 @@ variable "key_pair" {
   type = string
 }
 
-variable "image_id" {
+variable "image_name" {
   type = string
 }
 
 variable "public_network" {
-  type = any
+  type = string
 }
