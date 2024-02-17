@@ -14,8 +14,8 @@ resource "vault_jwt_auth_backend" "hse" {
   default_role        = "hse"
   tune {
     listing_visibility = "unauth"
-    default_lease_ttl  = "1h"
-    max_lease_ttl      = "1h"
+    default_lease_ttl  = "10h"
+    max_lease_ttl      = "10h"
     token_type         = "default-service"
   }
 }
@@ -40,8 +40,8 @@ resource "vault_identity_oidc_assignment" "hse" {
 resource "vault_identity_oidc_key" "hse" {
   name               = "hse"
   allowed_client_ids = ["*"]
-  verification_ttl   = 7200
-  rotation_period    = 3600
+  verification_ttl   = 86400
+  rotation_period    = 86400
   algorithm          = "RS256"
 }
 
@@ -52,12 +52,8 @@ resource "vault_identity_oidc_client" "keystone" {
   redirect_uris    = ["https://keystone.api.mekstack.ru/redirect_uri"]
   assignments      = ["allow_all"]
   key              = vault_identity_oidc_key.hse.id
-  id_token_ttl     = 1800
-  access_token_ttl = 3600
-}
-
-data "vault_identity_oidc_client_creds" "keystone" {
-  name = vault_identity_oidc_client.keystone.name
+  id_token_ttl     = 36000
+  access_token_ttl = 36000
 }
 
 resource "vault_identity_oidc_client" "vpnaas" {
@@ -66,15 +62,21 @@ resource "vault_identity_oidc_client" "vpnaas" {
   redirect_uris    = ["https://vpnaas.mekstack.ru"]
   assignments      = ["allow_all"]
   key              = vault_identity_oidc_key.hse.id
-  id_token_ttl     = 600
-  access_token_ttl = 1200
-}
-
-data "vault_identity_oidc_client_creds" "vpnaas" {
-  name = vault_identity_oidc_client.vpnaas.name
+  id_token_ttl     = 1200
+  access_token_ttl = 2400
 }
 
 // === End OpenID Clients Configuration ===
+
+resource "vault_identity_oidc_scope" "email" {
+  name = "email"
+  template = base64encode(<<EOF
+    {
+        "email": {{ identity.entity.aliases.auth_oidc_a69d5a95.name }}
+    }
+    EOF
+  )
+}
 
 resource "vault_identity_oidc_scope" "user" {
   name = "user"
@@ -88,12 +90,9 @@ resource "vault_identity_oidc_scope" "user" {
 }
 
 resource "vault_identity_oidc_provider" "hse" {
-  name = "hse"
-  allowed_client_ids = [
-    data.vault_identity_oidc_client_creds.keystone.client_id,
-    data.vault_identity_oidc_client_creds.vpnaas.client_id
-  ]
-  scopes_supported = ["user"]
+  name               = "hse"
+  allowed_client_ids = ["*"]
+  scopes_supported   = ["user", "email"]
 }
 
 output "hse_accessor" {

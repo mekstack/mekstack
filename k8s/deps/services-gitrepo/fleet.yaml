@@ -1,0 +1,4 @@
+defaultNamespace: fleet-local
+dependsOn:
+  - name: mekstack-deps-k8s-deps-cinder-csi
+  - name: mekstack-deps-k8s-deps-openstack-ccm

@@ -65,3 +65,4 @@ resource "openstack_dns_recordset_v2" "hse_docs" {
   type        = "A"
   records     = ["172.18.218.229"]
 }
+}

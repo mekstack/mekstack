@@ -1,0 +1,28 @@
+{{- range $index, $gateway := .Values.gateways }}
+{{- range $index, $vservice := $gateway.vservices }}
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: {{ $vservice.name }}
+spec:
+  hosts:
+  - "{{ $vservice.host }}"
+  gateways:
+  - {{ $gateway.name }}
+  http:
+  {{- range $inner_index, $http := $vservice.http}}
+  - name: http-{{ $http.name }}
+    route:
+      - destination:
+          host: {{ $http.destination | quote }}
+        {{- if hasKey $http "portNumber"}}
+          port:
+            number: {{$http.portNumber}}
+        {{- end}}
+    match:
+      - uri:
+          prefix: {{ $http.matchUriPrefix }}
+  {{- end}}
+---
+{{- end }}
+{{- end }}

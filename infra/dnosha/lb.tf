@@ -7,7 +7,7 @@ resource "openstack_lb_loadbalancer_v2" "lb" {
 }
 
 resource "openstack_networking_floatingip_v2" "fip" {
-  pool        = var.public_network.name
+  pool        = var.public_network
   address     = "172.18.218.200"
   description = "${var.name} VIP"
 }

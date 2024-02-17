@@ -1,0 +1,16 @@
+defaultNamespace: vault
+helm:
+  chart: git::https://github.com/hashicorp/vault-helm/
+  releaseName: vault
+  valuesFiles:
+    - values.yaml
+
+diff:
+  comparePatches:
+  - apiVersion: v1
+    kind: Secret
+    name: kms-creds
+    namespace: vault
+    operations:
+    - {"op":"remove", "path":"/data/credentials.json"}
+    - {"op":"remove", "path":"/data"}

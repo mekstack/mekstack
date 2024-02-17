@@ -30,7 +30,3 @@ resource "openstack_networking_subnet_v2" "public" {
     end   = "172.18.219.200"
   }
 }
-
-output "public_network" {
-  value = openstack_networking_network_v2.public
-}

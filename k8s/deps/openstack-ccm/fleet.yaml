@@ -1,0 +1,11 @@
+defaultNamespace: kube-system
+dependsOn:
+    # Secrets become ready even when they can't acess vault. However, this ensures openstack waits for vault-secrets-operator
+  - name: mekstack-deps-k8s-deps-openstack-configs
+
+helm:
+  releaseName: openstack-ccm
+  repo: https://kubernetes.github.io/cloud-provider-openstack
+  chart: openstack-cloud-controller-manager
+  valuesFiles:
+    - values.yaml

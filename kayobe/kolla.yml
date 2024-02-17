@@ -273,13 +273,13 @@ kolla_enable_barbican: true
 #kolla_enable_central_logging: true
 #kolla_enable_ceph_rgw:
 #kolla_enable_ceph_rgw_loadbalancer:
-#kolla_enable_cinder:
+kolla_enable_cinder: true
 #kolla_enable_cinder_backend_hnas_nfs:
 #kolla_enable_cinder_backend_iscsi:
-#kolla_enable_cinder_backend_lvm:
+kolla_enable_cinder_backend_lvm: true
 #kolla_enable_cinder_backend_nfs:
 #kolla_enable_cinder_backend_quobyte:
-#kolla_enable_cinder_backup:
+kolla_enable_cinder_backup: false
 #kolla_enable_cinder_horizon_policy_file:
 #kolla_enable_cloudkitty:
 #kolla_enable_collectd:
@@ -298,7 +298,7 @@ kolla_enable_designate: true
 #kolla_enable_glance_image_cache:
 #kolla_enable_gnocchi:
 #kolla_enable_gnocchi_statsd:
-#kolla_enable_grafana:
+kolla_enable_grafana: true
 #kolla_enable_hacluster:
 #kolla_enable_haproxy:
 #kolla_enable_haproxy_memcached:
@@ -335,7 +335,7 @@ kolla_enable_designate: true
 #kolla_enable_kafka:
 #kolla_enable_keepalived:
 #kolla_enable_keystone:
-#kolla_enable_keystone_federation:
+kolla_enable_keystone_federation: true
 #kolla_enable_keystone_horizon_policy_file:
 #kolla_enable_kibana:
 #kolla_enable_kuryr:
@@ -501,5 +501,5 @@ kolla_internal_tls_cert: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:interna
 # used. Default value is "{{ no_proxy }}".
 #kolla_no_proxy:
 
-kolla_federation_google_client_id:     "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_google_client_id') }}"
-kolla_federation_google_client_secret: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_google_client_secret') }}"
+kolla_keystone_federation_client_id:     "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_mekstack_client_id') }}"
+kolla_keystone_federation_client_secret: "{{ lookup('hashi_vault', 'secret=kv/data/kolla:federation_mekstack_client_secret') }}"

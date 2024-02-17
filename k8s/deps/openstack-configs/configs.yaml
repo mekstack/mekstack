@@ -1,0 +1,27 @@
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: openstack-ccm-cloud-config
+  namespace: kube-system
+spec:
+  destination:
+    create: true
+    name: cloud-config
+  mount: k8s
+  path: k3s-openstack-ccm
+  refreshAfter: 30s
+  type: kv-v2
+---
+apiVersion: secrets.hashicorp.com/v1beta1
+kind: VaultStaticSecret
+metadata:
+  name: cinder-csi-cloud-config
+  namespace: kube-system
+spec:
+  destination:
+    create: true
+    name: cinder-csi-cloud-config
+  mount: k8s
+  path: k3s-cinder-csi
+  refreshAfter: 30s
+  type: kv-v2

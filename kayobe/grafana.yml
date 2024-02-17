@@ -7,8 +7,8 @@
 grafana_local_admin_user_name: admin
 
 # Path to git repo containing Grafana dashboards. Eg.
-# https://github.com/stackhpc/grafana-reference-dashboards.gt
-grafana_monitoring_node_dashboard_repo: https://github.com/stackhpc/grafana-reference-dashboards.git
+# grafana_monitoring_node_dashboard_repo: https://github.com/stackhpc/grafana-reference-dashboards.gt
+grafana_monitoring_node_dashboard_repo: https://github.com/mekstack/grafana-dashboards.git
 # Dashboard repo version. Optional, defaults to 'HEAD'.
 grafana_monitoring_node_dashboard_repo_version: master
 
@@ -17,7 +17,7 @@ grafana_monitoring_node_dashboard_repo_checkout_path: /var/lib/grafana/dashboard
 
 # The path, relative to the grafana_monitoring_node_dashboard_repo_checkout_path
 # containing the dashboards. Eg. /prometheus/control_plane
-grafana_monitoring_node_dashboard_repo_path: /prometheus
+grafana_monitoring_node_dashboard_repo_path: /prometheus/
 
 # The Grafana organisation for the control plane. Note that for Monasca
 # Grafana with domain support the format is:
@@ -42,5 +42,5 @@ grafana_control_plane_organisation: mekstack
 grafana_datasources:
   prometheus:
     port: 9091
-    host: "{{ kolla_internal_fqdn }}"
-    
+    host: "https://{{ kolla_internal_fqdn }}"
+

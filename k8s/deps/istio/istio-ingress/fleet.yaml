@@ -1,0 +1,9 @@
+defaultNamespace: istio-ingress
+helm:
+  repo: https://istio-release.storage.googleapis.com/charts
+  chart: gateway
+  releaseName: istio-ingress
+
+dependsOn:
+  - name: mekstack-deps-k8s-deps-istio-istio-base
+  - name: mekstack-deps-k8s-deps-istio-istiod

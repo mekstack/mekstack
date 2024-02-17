@@ -1,0 +1,6 @@
+defaultNamespace: istio-ingress
+helm:
+  chart: Chart.yaml
+  releaseName: mekstack-vservices
+  valuesFiles:
+    - values.yaml

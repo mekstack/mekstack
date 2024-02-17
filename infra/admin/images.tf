@@ -40,11 +40,3 @@ resource "openstack_images_image_v2" "image" {
   min_ram_mb       = each.value.min_ram_mb
   properties       = each.value.properties
 }
-
-output "image" {
-  value = {
-    for img in local.images : img.name => {
-      id = openstack_images_image_v2.image[img.name].id
-    }
-  }
-}

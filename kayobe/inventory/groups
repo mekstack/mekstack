@@ -38,8 +38,8 @@ controllers
 [monitoring]
 # Empty group to provide declaration of monitoring group.
 
-[storage]
-# Empty group to provide declaration of storage group.
+[storage:children]
+controllers
 
 [compute]
 # Empty group to provide declaration of compute group.

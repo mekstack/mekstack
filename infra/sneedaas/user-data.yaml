@@ -2,6 +2,7 @@
 package_update: true
 packages:
   - nginx
+  - iptables-persistent
 
 write_files:
   - path: /etc/nginx/nginx.conf
@@ -16,20 +17,22 @@ write_files:
       }
 
       stream {
+          access_log off;
+          error_log /dev/null;
+
           map $ssl_preread_server_name $target {
               # Exceptions to be routed to a VLAN 217
               mekstack.ru 172.18.217.200:443;
+              status.mekstack.ru 172.18.217.200:443;
               cinder.api.mekstack.ru 172.18.217.200:443;
               nova.api.mekstack.ru 172.18.217.200:443;
               placement.api.mekstack.ru 172.18.217.200:443;
               keystone.api.mekstack.ru 172.18.217.200:443;
-              magnum.api.mekstack.ru 172.18.217.200:443;
               octavia.api.mekstack.ru 172.18.217.200:443;
               heat.api.mekstack.ru 172.18.217.200:443;
               designate.api.mekstack.ru 172.18.217.200:443;
               neutron.api.mekstack.ru 172.18.217.200:443;
               glance.api.mekstack.ru 172.18.217.200:443;
-              barbican.api.mekstack.ru 172.18.217.200:443;
               heat-cfn.api.mekstack.ru 172.18.217.200:443;
               novncproxy.api.mekstack.ru 172.18.217.200:443;
 
@@ -42,15 +45,20 @@ write_files:
               listen 443;
               ssl_preread on;
               proxy_pass $target;
+              proxy_connect_timeout 60s;
           }
       }
 
       http {
+          access_log off;
+          error_log /dev/null;
+
           server {
               resolver 172.18.218.200;
 
               listen 80;
               server_name _;
+              client_max_body_size 1000m;
 
               location / {
                   set $backend "http://$host";
@@ -59,6 +67,8 @@ write_files:
                   proxy_set_header Host $host;
                   proxy_set_header X-Real-IP $remote_addr;
                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                  proxy_connect_timeout 10s;
+                  proxy_http_version 1.1;
               }
           }
       }
@@ -66,3 +76,10 @@ write_files:
 runcmd:
   - systemctl enable nginx
   - systemctl restart nginx
+
+  - iptables -A OUTPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+  - iptables -A OUTPUT -d 172.18.218.0/23 -j ACCEPT
+  - iptables -A OUTPUT -d 172.18.217.0/24 -j ACCEPT
+  - iptables -A OUTPUT -j REJECT --reject-with icmp-net-unreachable
+
+  - iptables-save > /etc/iptables/rules.v4

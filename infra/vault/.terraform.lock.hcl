@@ -3,6 +3,7 @@
 
 provider "registry.terraform.io/hashicorp/vault" {
   version = "3.21.0"
+  hashes = [
+    "h1:ARKvVu4ew/Q9A2bir0eNvPqSKT14ft3y6AylXYHj2FY=",
+  ]
 }
-
-

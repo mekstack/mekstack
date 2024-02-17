@@ -70,7 +70,7 @@ compute_network_interfaces:
 
 # List of compute volume groups. See mrlesmithjr.manage-lvm role for
 # format.
-#compute_lvm_groups:
+compute_lvm_groups: "{{ overcloud_lvm_groups }}"
 
 # Default list of compute volume groups. See mrlesmithjr.manage-lvm role for
 # format.
@@ -85,15 +85,16 @@ compute_network_interfaces:
 # will also be used for Docker container and image storage if
 # 'docker_storage_driver' is set to 'devicemapper'. Default is true if
 # 'docker_storage_driver' is set to 'devicemapper', or false otherwise.
-#compute_lvm_group_data_enabled:
+compute_lvm_group_data_enabled: true
 
 # Compute LVM volume group for data. See mrlesmithjr.manage-lvm role for
 # format.
-#compute_lvm_group_data:
+#compute_lvm_group_data: "{{ docker_data_lvm }}"
 
 # List of disks for use by compute LVM data volume group. Default to an
 # invalid value to require configuration.
-#compute_lvm_group_data_disks:
+compute_lvm_group_data_disks:
+  - /dev/sdb
 
 # List of LVM logical volumes for the data volume group.
 #compute_lvm_group_data_lvs:

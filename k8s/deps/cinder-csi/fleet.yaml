@@ -1,0 +1,11 @@
+defaultNamespace: kube-system
+dependsOn:
+  # Secrets become ready even when they can't acess vault. However, this ensures openstack waits for vault-operator
+  - name: mekstack-deps-k8s-deps-openstack-configs
+
+helm:
+  releaseName: cinder-csi
+  repo: https://kubernetes.github.io/cloud-provider-openstack
+  chart: openstack-cinder-csi
+  valuesFiles:
+    - values.yaml

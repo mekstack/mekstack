@@ -1,4 +1,3 @@
-drone-secrets.yml
 .terraform/
 terraform.tfstate.backup
-image_cache
+image_cache/
