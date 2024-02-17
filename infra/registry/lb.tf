@@ -6,6 +6,20 @@ resource "openstack_lb_loadbalancer_v2" "lb" {
   depends_on = [openstack_compute_instance_v2.instance]
 }
 
+resource "openstack_networking_floatingip_v2" "fip" {
+  pool        = var.public_network
+  address     = "172.18.218.180"
+  description = "test registry"
+}
+
+resource "openstack_networking_floatingip_associate_v2" "lb_fip" {
+  port_id     = openstack_lb_loadbalancer_v2.lb.vip_port_id
+  floating_ip = openstack_networking_floatingip_v2.fip.address
+}
+
+
+// ======================== HTTP(S) Loadbalancer =======================
+
 locals {
   protocol_ports = {
     "HTTP" : 80,
