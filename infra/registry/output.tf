@@ -1,12 +1,25 @@
-#resource "null_resource" "write_hosts_file" {
-#  triggers = {
-#    ip_addresses = sha256(jsonencode(openstack_networking_floatingip_v2.fip[*].address))
-#  }
-#
-#  provisioner "local-exec" {
-#    command = <<-EOT
-#      echo "${join("\n", openstack_networking_floatingip_v2.fip[*].address)}" > ./registry/docker-registry/hosts
-#      echo "[defaults]\ninventory = ./hosts\nremote_user = ubuntu\nhost_key_checking = false" > ./registry/docker-registry/ansible.cfg
-#    EOT
-#  }
-#}
+provider "local" {}
+
+resource "local_file" "hosts" {
+  filename = "${path.module}/docker-registry/hosts"
+
+  content = <<-EOF
+    [servers]
+    registry-1 ansible_host=${openstack_networking_floatingip_v2.fip.address} ansible_port=2201
+    registry-2 ansible_host=${openstack_networking_floatingip_v2.fip.address} ansible_port=2202
+  EOF
+  file_permission = "0664"
+}
+
+
+resource "local_file" "ansible_cfg" {
+  filename = "${path.module}/docker-registry/ansible.cfg"
+
+  content = <<-EOF
+    [defaults]
+    host_key_cheking = false
+    inventory = ./hosts
+  EOF
+  file_permission = "0664"
+}
+
