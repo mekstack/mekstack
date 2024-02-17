@@ -1,7 +1,6 @@
-
 upstream registry_servers {
-    server registry01:5000;
-    server registry02:5000;
+    server 10.0.0.11:5000;
+    server 10.0.0.12:5000;
 }
 
 server {
