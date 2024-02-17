@@ -13,12 +13,13 @@ resource "openstack_compute_instance_v2" "instance" {
 
   name            = "${var.name}-${count.index + 1}"
   image_id        = data.openstack_images_image_v2.image.id
-  flavor_name     = "m2s.medium"
+  flavor_name     = "m2s.small"
   key_pair        = var.key_pair
   security_groups = ["default"]
 
   network {
-    uuid = openstack_networking_network_v2.network.id
+    uuid        = openstack_networking_network_v2.network.id
+    fixed_ip_v4 = "10.0.0.${count.index + 11}"
   }
 
   scheduler_hints {
