@@ -31,14 +31,3 @@ resource "openstack_networking_router_route_v2" "router_route" {
   destination_cidr = "172.18.217.0/24"
   next_hop         = "172.18.218.2"
 }
-
-resource "openstack_networking_floatingip_v2" "fip" {
-  pool        = var.public_network
-  address     = "172.18.219.111"
-  description = "test network registry"
-}
-
-resource "openstack_networking_floatingip_associate_v2" "lb_fip" {
-  port_id     = openstack_lb_loadbalancer_v2.lb.vip_port_id
-  floating_ip = openstack_networking_floatingip_v2.fip.address
-}
