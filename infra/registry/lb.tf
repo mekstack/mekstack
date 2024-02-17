@@ -36,6 +36,7 @@ resource "openstack_lb_listener_v2" "lb" {
   protocol_port   = each.value
 }
 
+
 resource "openstack_lb_pool_v2" "lb" {
   for_each = local.protocol_ports
 
@@ -69,4 +70,34 @@ resource "openstack_lb_members_v2" "lb" {
       protocol_port = each.value
     }
   }
+}
+
+// ===================== SSH Port Forwarding ======================
+
+resource "openstack_lb_listener_v2" "ssh_port_forward" {
+  for_each = toset(openstack_compute_instance_v2.instance[*].network[0].fixed_ip_v4)
+
+  name            = "SSH Port Forwarding"
+  loadbalancer_id = openstack_lb_loadbalancer_v2.lb.id
+  protocol        = "TCP"
+  protocol_port   = 2201 + index(openstack_compute_instance_v2.instance[*].network[0].fixed_ip_v4, each.key)
+}
+
+
+resource "openstack_lb_pool_v2" "ssh_port_forward" {
+  for_each = toset(openstack_compute_instance_v2.instance[*].network[0].fixed_ip_v4)
+
+  name        = "SSH Port Forwarding"
+  listener_id = openstack_lb_listener_v2.ssh_port_forward[each.key].id
+  protocol    = "TCP"
+  lb_method   = "SOURCE_IP_PORT"
+}
+
+resource "openstack_lb_member_v2" "ssh_port_forward" {
+  for_each = toset(openstack_compute_instance_v2.instance[*].network[0].fixed_ip_v4)
+
+  name          = "SSH Port Forwarding"
+  pool_id       = openstack_lb_pool_v2.ssh_port_forward[each.key].id
+  address       = each.value
+  protocol_port = 22
 }
